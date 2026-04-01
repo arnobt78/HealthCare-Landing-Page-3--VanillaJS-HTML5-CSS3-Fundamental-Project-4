@@ -850,6 +850,7 @@ button {
   inset: 0;
   width: 85%;
   left: -100%;
+  z-index: 2; /* above .cta-shine-button (z-index: 1) so sweep shows on solid fills */
   background: linear-gradient(
     105deg,
     transparent 0%,
