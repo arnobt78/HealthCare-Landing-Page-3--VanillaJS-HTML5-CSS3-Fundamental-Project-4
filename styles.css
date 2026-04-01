@@ -1574,6 +1574,12 @@ button {
   border-color: transparent;
 }
 
+/* Stable height while tabs auto-rotate (min-height set in tabs.js from tallest panel) */
+.tab-panels {
+  position: relative;
+  width: 100%;
+}
+
 .tab-panel {
   padding: 1.5rem;
   border-radius: var(--radius-md);
@@ -1583,6 +1589,19 @@ button {
   box-shadow:
     var(--glow-sky-sm),
     0 16px 40px rgba(15, 23, 42, 0.05);
+}
+
+/* Off-screen measure pass: no flash, no layout jump */
+.tab-panel--measuring {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  visibility: hidden;
+  pointer-events: none;
+  height: auto;
+  overflow: hidden;
 }
 
 /* Staggered “magazine rack” reveal — one line at a time (see tabs.js) */
@@ -1596,11 +1615,11 @@ button {
   transform: translate3d(-1.1rem, 0.55rem, 0) scale(0.98);
   filter: blur(2px);
   transition:
-    opacity 0.45s var(--tab-ease, cubic-bezier(0.25, 0.9, 0.32, 1))
+    opacity 0.78s var(--tab-ease, cubic-bezier(0.22, 1, 0.36, 1))
       var(--tab-line-delay, 0ms),
-    transform 0.52s var(--tab-ease, cubic-bezier(0.25, 0.9, 0.32, 1))
+    transform 0.88s var(--tab-ease, cubic-bezier(0.22, 1, 0.36, 1))
       var(--tab-line-delay, 0ms),
-    filter 0.4s ease var(--tab-line-delay, 0ms);
+    filter 0.65s ease var(--tab-line-delay, 0ms);
 }
 
 .tabs-block--ready .tab-panel--lines-visible [data-tab-line] {
@@ -1608,11 +1627,11 @@ button {
   transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
   transition:
-    opacity 0.48s var(--tab-ease, cubic-bezier(0.25, 0.9, 0.32, 1))
+    opacity 0.82s var(--tab-ease, cubic-bezier(0.22, 1, 0.36, 1))
       var(--tab-line-delay, 0ms),
-    transform 0.55s var(--tab-ease, cubic-bezier(0.25, 0.9, 0.32, 1))
+    transform 0.95s var(--tab-ease, cubic-bezier(0.22, 1, 0.36, 1))
       var(--tab-line-delay, 0ms),
-    filter 0.45s ease var(--tab-line-delay, 0ms);
+    filter 0.72s ease var(--tab-line-delay, 0ms);
 }
 
 /* Paragraph / note / intro: vertical “round” rail seats like a magazine column */
@@ -1643,8 +1662,8 @@ button {
   transform: scaleY(0.15);
   transform-origin: center bottom;
   transition:
-    opacity 0.4s ease var(--tab-line-delay, 0ms),
-    transform 0.5s cubic-bezier(0.34, 1.2, 0.55, 1) var(--tab-line-delay, 0ms);
+    opacity 0.72s ease var(--tab-line-delay, 0ms),
+    transform 0.88s cubic-bezier(0.28, 1, 0.45, 1) var(--tab-line-delay, 0ms);
 }
 
 .tabs-block--ready
@@ -1697,8 +1716,8 @@ button {
   opacity: 0;
   transform: scale(0.2) translateX(-0.35rem);
   transition:
-    opacity 0.4s ease var(--tab-line-delay, 0ms),
-    transform 0.5s cubic-bezier(0.34, 1.25, 0.55, 1) var(--tab-line-delay, 0ms);
+    opacity 0.72s ease var(--tab-line-delay, 0ms),
+    transform 0.88s cubic-bezier(0.28, 1, 0.48, 1) var(--tab-line-delay, 0ms);
 }
 
 .tabs-block--ready

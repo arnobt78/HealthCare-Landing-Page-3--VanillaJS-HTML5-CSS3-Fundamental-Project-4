@@ -6,8 +6,8 @@
  */
 
 const ROTATE_MS = 5000;
-/** Delay between each line so copy reads “one cartridge at a time” */
-const LINE_STAGGER_MS = 125;
+/** Delay before each line starts (larger = more “one beat at a time”) */
+const LINE_STAGGER_MS = 280;
 
 /**
  * @param {HTMLElement} panel
@@ -82,6 +82,45 @@ function activateTab(tabs, active, reducedMotion, instantReveal) {
       reducedMotion,
       Boolean(instantReveal),
     );
+  }
+}
+
+/**
+ * Reserve vertical space for the tallest tab panel so auto-slide does not
+ * shift the layout. Measures off-screen with full line visibility, then
+ * restores the active tab.
+ *
+ * @param {HTMLElement} wrap — [data-tab-panels]
+ * @param {Element[]} tabs
+ * @param {boolean} reducedMotion
+ */
+function syncTabPanelsMinHeight(wrap, tabs, reducedMotion) {
+  const panels = Array.from(wrap.querySelectorAll(":scope > .tab-panel"));
+  if (panels.length === 0) {
+    return;
+  }
+
+  const activeBtn = tabs.find((t) => t.getAttribute("aria-selected") === "true");
+  let maxH = 0;
+
+  panels.forEach((panel) => {
+    if (!(panel instanceof HTMLElement)) {
+      return;
+    }
+    const wasHidden = panel.hasAttribute("hidden");
+    panel.removeAttribute("hidden");
+    panel.classList.add("tab-panel--measuring", "tab-panel--lines-visible");
+    maxH = Math.max(maxH, panel.offsetHeight);
+    panel.classList.remove("tab-panel--measuring", "tab-panel--lines-visible");
+    if (wasHidden) {
+      panel.setAttribute("hidden", "");
+    }
+  });
+
+  wrap.style.minHeight = `${Math.ceil(maxH)}px`;
+
+  if (activeBtn instanceof HTMLButtonElement) {
+    activateTab(tabs, activeBtn, reducedMotion, true);
   }
 }
 
@@ -173,5 +212,28 @@ export function initTabs(root = document) {
       activateTab(tabs, first, reducedMotion, true);
     }
     mount?.classList.add("tabs-block--ready");
+
+    const panelsWrap = list.nextElementSibling;
+    if (
+      panelsWrap instanceof HTMLElement &&
+      panelsWrap.matches("[data-tab-panels]")
+    ) {
+      const runSync = () => syncTabPanelsMinHeight(panelsWrap, tabs, reducedMotion);
+
+      runSync();
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(runSync);
+      }
+
+      let resizeT = 0;
+      window.addEventListener(
+        "resize",
+        () => {
+          window.clearTimeout(resizeT);
+          resizeT = window.setTimeout(runSync, 160);
+        },
+        { passive: true },
+      );
+    }
   });
 }
