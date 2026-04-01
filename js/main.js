@@ -26,24 +26,37 @@ function initHeroRotation() {
     return;
   }
 
-  const photos = [
-    "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1666214280391-8ff5bd3c0bf0?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1559839734-2b71e197d2ac?auto=format&fit=crop&w=1920&q=80",
+  /** @param {string} id full Unsplash photo id after "photo-" */
+  const u = (id) =>
+    `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1920&q=80`;
+
+  /**
+   * Five slides; each has a primary + fallbacks. Unsplash sometimes 403s or
+   * drops a file — probing onerror (false) avoids swapping to a “green” layer.
+   */
+  const photoCandidates = [
+    [u("1631217868264-e5b90bb7e133"), u("1538108149393-fedd4303d0e3")],
+    [u("1584515933487-779824d29309"), u("1532938911079-1b06ac7ceec7")],
+    [u("1519494026892-80bbd2d6fd0d"), u("1666214280391-8ff5bd3c0bf0")],
+    [u("1576091160399-112ba8d25d1d"), u("1516549655169-83a407c1f9b4")],
+    [u("1559839734-2b71e197d2ac"), u("1505751172876-fa1923c5c528")],
   ];
+
+  const slideCount = photoCandidates.length;
+
+  /** @type {Record<number, string>} */
+  const heroUrlCache = {};
 
   const a = /** @type {HTMLElement} */ (layers[0]);
   const b = /** @type {HTMLElement} */ (layers[1]);
 
-  photos.forEach((url) => {
+  photoCandidates.flat().forEach((url) => {
     const img = new Image();
     img.src = url;
   });
 
-  a.style.backgroundImage = `url("${photos[0]}")`;
-  b.style.backgroundImage = `url("${photos[1 % photos.length]}")`;
+  a.style.backgroundImage = `url("${photoCandidates[0][0]}")`;
+  b.style.backgroundImage = `url("${photoCandidates[1 % slideCount][0]}")`;
 
   let active = 0;
   let index = 0;
@@ -51,39 +64,59 @@ function initHeroRotation() {
   let lastCycleAdvance = 0;
 
   /**
-   * Wait until the bitmap is ready so we never crossfade to an empty layer
-   * (reads as “no image” over the green hero fallback).
    * @param {string} url
-   * @returns {Promise<void>}
+   * @returns {Promise<boolean>}
    */
-  function preloadHeroUrl(url) {
+  function probeImageLoad(url) {
     return new Promise((resolve) => {
       const img = new Image();
-      const done = () => {
-        resolve();
-      };
       img.onload = () => {
         if (typeof img.decode === "function") {
-          img.decode().then(done).catch(done);
+          img.decode().then(() => resolve(true)).catch(() => resolve(true));
         } else {
-          done();
+          resolve(true);
         }
       };
-      img.onerror = done;
+      img.onerror = () => resolve(false);
       img.src = url;
     });
   }
 
   /**
+   * @param {number} slideIndex
+   * @returns {Promise<string>}
+   */
+  async function resolveHeroUrl(slideIndex) {
+    const cached = heroUrlCache[slideIndex];
+    if (cached) {
+      return cached;
+    }
+    const list = photoCandidates[slideIndex];
+    for (const url of list) {
+      if (await probeImageLoad(url)) {
+        heroUrlCache[slideIndex] = url;
+        return url;
+      }
+    }
+    heroUrlCache[slideIndex] = list[0];
+    return list[0];
+  }
+
+  void (async () => {
+    const u0 = await resolveHeroUrl(0);
+    const u1 = await resolveHeroUrl(1 % slideCount);
+    a.style.backgroundImage = `url("${u0}")`;
+    b.style.backgroundImage = `url("${u1}")`;
+  })();
+
+  /**
    * @returns {Promise<void>}
    */
   async function goNext() {
-    const nextIndex = (index + 1) % photos.length;
+    const nextIndex = (index + 1) % slideCount;
     const curLayer = active === 0 ? a : b;
     const nextLayer = active === 0 ? b : a;
-    const url = photos[nextIndex];
-
-    await preloadHeroUrl(url);
+    const url = await resolveHeroUrl(nextIndex);
 
     nextLayer.style.backgroundImage = `url("${url}")`;
     curLayer.classList.remove("hero__bg-layer--active");
