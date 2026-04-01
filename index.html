@@ -13,7 +13,13 @@
       content="Healthcare landing showcase: vanilla HTML, CSS, and JavaScript."
     />
     <meta property="og:type" content="website" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <!-- Only favicon.ico here — a second rel=icon (e.g. PNG) makes many browsers pick PNG instead -->
+    <link
+      rel="icon"
+      href="./public/favicon.ico"
+      sizes="any"
+      type="image/x-icon"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -46,7 +52,8 @@
             "
           />
           <span class="nav__logo-text"
-            >Health<span class="nav__logo-accent">Care</span></span
+            ><span class="nav__logo-health">Health</span
+            ><span class="nav__logo-accent">Care</span></span
           >
         </a>
 
@@ -141,77 +148,89 @@
           data-parallax-layer
           aria-hidden="true"
         ></div>
-        <div class="max-w-9xl hero__inner" data-reveal-stagger="100">
+        <div class="max-w-9xl hero__inner">
           <div class="hero__content">
-            <div class="hero__badge-row">
-              <p class="badge badge--hero">Patient-first care</p>
-              <p class="badge badge--hero">24/7 support</p>
-              <p class="badge badge--hero">Trusted specialists</p>
-            </div>
-            <h1>Providing an exceptional patient experience</h1>
-            <p class="hero__lead">
-              Welcome — where compassionate care, modern facilities, and clear
-              communication meet. We are dedicated to your well-being with a
-              calm, respectful visit every time.
-            </p>
-            <div class="hero__cta-row">
-              <div class="cta-shine-wrap">
-                <a
-                  href="/services"
-                  data-spa-link
-                  class="btn btn--primary btn-ripple cta-shine-button"
-                  >See services</a
-                >
-              </div>
-              <div class="cta-shine-wrap">
-                <a
-                  href="/about"
-                  data-spa-link
-                  class="btn btn--ghost btn-ripple cta-shine-button"
-                  >About us</a
-                >
+            <!--
+              One-by-one lines: initSequentialHeroReveal (scrollReveal.js), not IO.
+              Hero shell + background stay static on load.
+            -->
+            <div class="hero__stack">
+              <p class="badge badge--hero" data-hero-line>Patient-first care</p>
+              <p class="badge badge--hero" data-hero-line>24/7 support</p>
+              <p class="badge badge--hero" data-hero-line>Trusted specialists</p>
+              <h1 data-hero-line>Providing an exceptional patient experience</h1>
+              <p class="hero__lead" data-hero-line>
+                Welcome — where compassionate care, modern facilities, and clear
+                communication meet. We are dedicated to your well-being with a
+                calm, respectful visit every time.
+              </p>
+              <div class="hero__cta-row hero__cta-row--split">
+                <div class="cta-shine-wrap" data-hero-line>
+                  <a
+                    href="/services"
+                    data-spa-link
+                    class="btn btn--primary btn-ripple cta-shine-button"
+                    >See services</a
+                  >
+                </div>
+                <div class="cta-shine-wrap" data-hero-line>
+                  <a
+                    href="/about"
+                    data-spa-link
+                    class="btn btn--ghost btn-ripple cta-shine-button"
+                    >About us</a
+                  >
+                </div>
               </div>
             </div>
           </div>
           <div class="hero__form-card">
             <form class="book-form" action="#" method="get">
-              <h2 class="book-form__title">Book now</h2>
-              <p class="book-form__subtitle">
+              <h2 class="book-form__title" data-book-line>Book now</h2>
+              <p class="book-form__subtitle" data-book-line>
                 Quick scheduling in under a minute.
               </p>
-              <label class="sr-only" for="fn">First name</label>
-              <input
-                id="fn"
-                name="firstName"
-                type="text"
-                placeholder="First name"
-                autocomplete="given-name"
-              />
-              <label class="sr-only" for="ln">Last name</label>
-              <input
-                id="ln"
-                name="lastName"
-                type="text"
-                placeholder="Last name"
-                autocomplete="family-name"
-              />
-              <label class="sr-only" for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Email"
-                autocomplete="email"
-              />
-              <label class="sr-only" for="phone">Phone</label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                placeholder="Phone number"
-                autocomplete="tel"
-              />
-              <div class="cta-shine-wrap">
+              <div class="book-form__field" data-book-line>
+                <label class="sr-only" for="fn">First name</label>
+                <input
+                  id="fn"
+                  name="firstName"
+                  type="text"
+                  placeholder="First name"
+                  autocomplete="given-name"
+                />
+              </div>
+              <div class="book-form__field" data-book-line>
+                <label class="sr-only" for="ln">Last name</label>
+                <input
+                  id="ln"
+                  name="lastName"
+                  type="text"
+                  placeholder="Last name"
+                  autocomplete="family-name"
+                />
+              </div>
+              <div class="book-form__field" data-book-line>
+                <label class="sr-only" for="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  autocomplete="email"
+                />
+              </div>
+              <div class="book-form__field" data-book-line>
+                <label class="sr-only" for="phone">Phone</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="Phone number"
+                  autocomplete="tel"
+                />
+              </div>
+              <div class="cta-shine-wrap" data-book-line>
                 <button
                   type="submit"
                   class="btn btn--secondary btn-ripple cta-shine-button form__btn"
@@ -313,101 +332,102 @@
         aria-labelledby="tabs-heading"
       >
         <div data-reveal-stagger="75">
-        <h2 id="tabs-heading" class="section__title">
-          Plans &amp; information
-        </h2>
-        <p class="section__subtitle section__subtitle--tabs">
-          Click a tab to swap panels — <code>aria-selected</code> keeps
-          assistive tech in sync (open tabs.js to see how).
-        </p>
-        <div
-          class="tabs"
-          role="tablist"
-          aria-label="Services insurance and FAQ"
-        >
-          <button
-            type="button"
-            role="tab"
-            id="tab-svc"
-            aria-selected="true"
-            aria-controls="panel-svc"
-          >
-            Services
-          </button>
-          <button
-            type="button"
-            role="tab"
-            id="tab-ins"
-            aria-selected="false"
-            aria-controls="panel-ins"
-            tabindex="-1"
-          >
-            Insurance
-          </button>
-          <button
-            type="button"
-            role="tab"
-            id="tab-faq"
-            aria-selected="false"
-            aria-controls="panel-faq"
-            tabindex="-1"
-          >
-            FAQ
-          </button>
-        </div>
-        <div
-          id="panel-svc"
-          role="tabpanel"
-          aria-labelledby="tab-svc"
-          class="tab-panel tab-panel--active"
-        >
-          <p>
-            Primary care, diagnostics, and specialty referrals are coordinated
-            through one chart so your story is not repeated room to room.
+          <h2 id="tabs-heading" class="section__title">
+            Plans &amp; information
+          </h2>
+          <p class="section__subtitle section__subtitle--tabs">
+            Click a tab to swap panels — <code>aria-selected</code> keeps
+            assistive tech in sync (open tabs.js to see how).
           </p>
-          <ul class="tab-panel__list">
-            <li>Same-day acute visits when capacity allows</li>
-            <li>Secure messaging for non-urgent questions</li>
-            <li>After-visit summaries in plain language</li>
-          </ul>
-        </div>
-        <div
-          id="panel-ins"
-          role="tabpanel"
-          aria-labelledby="tab-ins"
-          class="tab-panel"
-          hidden
-        >
-          <p>
-            We work with major insurers; bring your card photo ID. Estimates for
-            elective procedures can be requested at the front desk.
-          </p>
-          <p class="tab-panel__note">
-            This is demo copy for the learning project — verify coverage with
-            your carrier.
-          </p>
-        </div>
-        <div
-          id="panel-faq"
-          role="tabpanel"
-          aria-labelledby="tab-faq"
-          class="tab-panel"
-          hidden
-        >
-          <details class="faq-item">
-            <summary>How do I reschedule?</summary>
+          <div
+            class="tabs"
+            role="tablist"
+            aria-label="Services insurance and FAQ"
+          >
+            <button
+              type="button"
+              role="tab"
+              id="tab-svc"
+              aria-selected="true"
+              aria-controls="panel-svc"
+            >
+              Services
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="tab-ins"
+              aria-selected="false"
+              aria-controls="panel-ins"
+              tabindex="-1"
+            >
+              Insurance
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="tab-faq"
+              aria-selected="false"
+              aria-controls="panel-faq"
+              tabindex="-1"
+            >
+              FAQ
+            </button>
+          </div>
+          <div
+            id="panel-svc"
+            role="tabpanel"
+            aria-labelledby="tab-svc"
+            class="tab-panel tab-panel--active"
+          >
             <p>
-              Call the number on your confirmation or use the patient portal
-              link in your email.
+              Primary care, diagnostics, and specialty referrals are coordinated
+              through one chart so your story is not repeated room to room.
             </p>
-          </details>
-          <details class="faq-item">
-            <summary>What should I bring?</summary>
+            <ul class="tab-panel__list">
+              <li>Same-day acute visits when capacity allows</li>
+              <li>Secure messaging for non-urgent questions</li>
+              <li>After-visit summaries in plain language</li>
+            </ul>
+          </div>
+          <div
+            id="panel-ins"
+            role="tabpanel"
+            aria-labelledby="tab-ins"
+            class="tab-panel"
+            hidden
+          >
             <p>
-              Insurance card, photo ID, and a list of medications and allergies.
+              We work with major insurers; bring your card photo ID. Estimates
+              for elective procedures can be requested at the front desk.
             </p>
-          </details>
-        </div>
+            <p class="tab-panel__note">
+              This is demo copy for the learning project — verify coverage with
+              your carrier.
+            </p>
+          </div>
+          <div
+            id="panel-faq"
+            role="tabpanel"
+            aria-labelledby="tab-faq"
+            class="tab-panel"
+            hidden
+          >
+            <details class="faq-item">
+              <summary>How do I reschedule?</summary>
+              <p>
+                Call the number on your confirmation or use the patient portal
+                link in your email.
+              </p>
+            </details>
+            <details class="faq-item">
+              <summary>What should I bring?</summary>
+              <p>
+                Insurance card, photo ID, and a list of medications and
+                allergies.
+              </p>
+            </details>
+          </div>
         </div>
       </section>
 
@@ -513,46 +533,46 @@
       <!-- Comparison table: semantic table + scoped styles in styles.css -->
       <section class="section max-w-9xl" aria-labelledby="compare-heading">
         <div data-reveal-stagger="85">
-        <h2 id="compare-heading" class="section__title">Care tiers (demo)</h2>
-        <p class="section__subtitle">
-          Tables are great for comparing options side-by-side — resize the
-          window to see horizontal scroll on small screens.
-        </p>
-        <div class="table-wrap glass-panel">
-          <table class="compare-table">
-            <caption class="sr-only">
-              Comparison of visit types
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Feature</th>
-                <th scope="col">Standard</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Concierge</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Booking window</th>
-                <td>2–3 weeks</td>
-                <td>3–5 days</td>
-                <td>Same week</td>
-              </tr>
-              <tr>
-                <th scope="row">Telehealth</th>
-                <td>Yes</td>
-                <td>Yes</td>
-                <td>Yes</td>
-              </tr>
-              <tr>
-                <th scope="row">Care navigator</th>
-                <td>—</td>
-                <td>Optional</td>
-                <td>Dedicated</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <h2 id="compare-heading" class="section__title">Care tiers</h2>
+          <p class="section__subtitle">
+            Tables are great for comparing options side-by-side — resize the
+            window to see horizontal scroll on small screens.
+          </p>
+          <div class="table-wrap glass-panel">
+            <table class="compare-table">
+              <caption class="sr-only">
+                Comparison of visit types
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Feature</th>
+                  <th scope="col">Standard</th>
+                  <th scope="col">Priority</th>
+                  <th scope="col">Concierge</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Booking window</th>
+                  <td>2–3 weeks</td>
+                  <td>3–5 days</td>
+                  <td>Same week</td>
+                </tr>
+                <tr>
+                  <th scope="row">Telehealth</th>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <th scope="row">Care navigator</th>
+                  <td>—</td>
+                  <td>Optional</td>
+                  <td>Dedicated</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -716,43 +736,40 @@
 
       <section class="section max-w-9xl resources" id="resources">
         <div data-reveal-stagger="90">
-        <div class="resources__text">
-          <h2 class="section__title">Patient resources</h2>
-          <p class="section__subtitle">
-            Downloadable forms, visit prep, and what to expect — this block is a
-            layout sample with an Unsplash accent image.
-          </p>
-          <ul class="resources__list">
-            <li>
-              <span class="badge badge--sky">PDF</span> New patient packet
-            </li>
-            <li>
-              <span class="badge badge--amber">Tip</span> Fasting instructions
-            </li>
-            <li>
-              <span class="badge badge--emerald">Portal</span> Lab results
-            </li>
-          </ul>
-        </div>
-        <div class="resources__visual">
-          <img
-            class="safe-img rounded-img"
-            data-safe-src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
-            src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
-            alt="Healthcare professional with tablet"
-            width="720"
-            height="540"
-            loading="lazy"
-          />
-        </div>
+          <div class="resources__text">
+            <h2 class="section__title">Patient resources</h2>
+            <p class="section__subtitle">
+              Downloadable forms, visit prep, and what to expect — this block is
+              a layout sample with an Unsplash accent image.
+            </p>
+            <ul class="resources__list">
+              <li>
+                <span class="badge badge--sky">PDF</span> New patient packet
+              </li>
+              <li>
+                <span class="badge badge--amber">Tip</span> Fasting instructions
+              </li>
+              <li>
+                <span class="badge badge--emerald">Portal</span> Lab results
+              </li>
+            </ul>
+          </div>
+          <div class="resources__visual">
+            <img
+              class="safe-img rounded-img"
+              data-safe-src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
+              src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
+              alt="Healthcare professional with tablet"
+              width="720"
+              height="540"
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
       <section class="section max-w-9xl contact-block" id="contact">
-        <div
-          class="contact-block__inner glass-panel"
-          data-reveal-stagger="100"
-        >
+        <div class="contact-block__inner glass-panel" data-reveal-stagger="100">
           <h2 class="section__title">Visit or reach out</h2>
           <p>
             123 London Bridge Street, London — support@care.com — (+012) 3456

@@ -10,6 +10,7 @@ import { initSafeImages } from "./safeImage.js";
 import {
   initScrollReveal,
   initRevealStagger,
+  initSequentialHeroReveal,
 } from "./scrollReveal.js";
 import { initParallax } from "./parallax.js";
 import { initTabs } from "./tabs.js";
@@ -64,6 +65,28 @@ function initFooterYear() {
   }
 }
 
+/**
+ * After the hero, switch header to a light bar so nav links stay readable on
+ * pale sections (transparent header stays over the hero only).
+ */
+function initHeaderScrollState() {
+  const header = document.querySelector(".site-header");
+  const hero = document.querySelector("[data-hero]");
+  if (!(header instanceof HTMLElement) || !(hero instanceof HTMLElement)) {
+    return;
+  }
+
+  const apply = () => {
+    const threshold = Math.max(hero.offsetHeight - 72, 0);
+    const onLight = window.scrollY > threshold;
+    header.classList.toggle("site-header--on-light", onLight);
+  };
+
+  apply();
+  window.addEventListener("scroll", apply, { passive: true });
+  window.addEventListener("resize", apply, { passive: true });
+}
+
 function boot() {
   const bookForm = document.querySelector(".book-form");
   if (bookForm) {
@@ -76,6 +99,7 @@ function boot() {
   initRipple(".btn-ripple");
   initSafeImages(document);
   initRevealStagger(document);
+  initSequentialHeroReveal(document);
   initScrollReveal(document);
   initParallax(document.querySelector("[data-parallax-layer]"));
   initTabs(document);
@@ -84,6 +108,7 @@ function boot() {
   initDoctorsCarousel(document);
   initHeroRotation();
   initFooterYear();
+  initHeaderScrollState();
 }
 
 if (document.readyState === "loading") {
