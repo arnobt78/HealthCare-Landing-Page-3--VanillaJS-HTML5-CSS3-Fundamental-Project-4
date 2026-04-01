@@ -1,17 +1,8 @@
-# Health Care - Javascript Website Template (Design-3)
-
-![Screenshot 2025-07-28 at 23 08 25](https://github.com/user-attachments/assets/19f7249c-94dc-4744-94f8-eb1fc2866191)
-![Screenshot 2025-07-28 at 23 08 43](https://github.com/user-attachments/assets/d5a6c6f7-87d0-43fd-9931-7e8b6aec2069)
-![Screenshot 2025-07-28 at 23 08 54](https://github.com/user-attachments/assets/de2e8ae1-8aae-4531-ae6b-5ff0dfa8ecfb)
-![Screenshot 2025-07-28 at 23 09 04](https://github.com/user-attachments/assets/3e257135-b11c-42ef-9ef6-745c7254b519)
-![Screenshot 2025-07-28 at 23 09 17](https://github.com/user-attachments/assets/e3eff188-f9c4-4840-ae75-c71806fe5e19)
-![Screenshot 2025-07-28 at 23 10 16](https://github.com/user-attachments/assets/a3d4afd6-70b7-491a-a7b5-d13fd0cd333c)
-
----
+# Framework-free Health Care Landing Page 3 - JavaScript (Vanilla), HTML5, CSS3 Fundamental Project 4 (Framework-free SPA)
 
 A modern, responsive, and user-friendly Health Care Website Landing Page built from scratch using HTML and CSS. This project is perfect for learning, portfolio, or as a starting point for healthcare-related web projects.
 
-- **Live Demo:** [https://healthcare-template-3.netlify.app/](https://healthcare-template-3.netlify.app/)
+- **Live Demo:** [https://healthcare-ui-3.vercel.app/](https://healthcare-ui-3.vercel.app/)
 
 ---
 
@@ -92,7 +83,7 @@ HealthCare_22-07-23-main/
 ### Using a Local Server (Recommended for Development)
 
 - **With Python 3:**
-  
+
   ```sh
   python3 -m http.server 8000
   ```

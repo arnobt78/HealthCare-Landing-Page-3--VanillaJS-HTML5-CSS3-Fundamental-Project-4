@@ -3,266 +3,759 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="HealthCare — compassionate care, modern facilities, and patient-first scheduling. Educational vanilla JS landing demo."
+    />
+    <meta property="og:title" content="HealthCare | Patient Experience" />
+    <meta
+      property="og:description"
+      content="Healthcare landing showcase: vanilla HTML, CSS, and JavaScript."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <title>Web Design Mastery | HealthCare</title>
+    <title>HealthCare | Exceptional Patient Experience</title>
   </head>
   <body>
-    <header>
-      <nav class="section__container nav__container">
-        <div class="nav__logo">Health<span>Care</span></div>
-        <ul class="nav__links">
-         <li class="link"><a href="#home">Home</a></li>
-          <li class="link"><a href="#about">About Us</a></li>
-          <li class="link"><a href="#service">Services</a></li>
-          <li class="link"><a href="#pages">Pages</a></li>
-          <li class="link"><a href="#blog">Blog</a></li>
+    <!-- Skip link: keyboard users jump past repetitive navigation -->
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <nav
+        class="max-w-9xl nav__bar"
+        aria-label="Primary"
+      >
+        <a href="/" class="nav__logo" data-spa-link data-nav-link>
+          <img
+            src="/favicon.ico"
+            width="36"
+            height="36"
+            alt=""
+            class="nav__logo-icon"
+          />
+          <span>Health<span class="nav__logo-accent">Care</span></span>
+        </a>
+
+        <ul class="nav__links nav__links--desktop">
+          <li>
+            <a href="/" data-spa-link data-nav-link>Home</a>
+          </li>
+          <li>
+            <a href="/services" data-spa-link data-nav-link>Services</a>
+          </li>
+          <li>
+            <a href="/about" data-spa-link data-nav-link>About</a>
+          </li>
+          <li>
+            <a href="/doctors" data-spa-link data-nav-link>Doctors</a>
+          </li>
+          <li>
+            <a href="/why" data-spa-link data-nav-link>Why us</a>
+          </li>
+          <li>
+            <a href="/resources" data-spa-link data-nav-link>Resources</a>
+          </li>
+          <li>
+            <a href="/contact" data-spa-link data-nav-link>Contact</a>
+          </li>
         </ul>
-        <button class="btn">Contact Us</button>
+
+        <div class="nav__actions">
+          <div class="cta-shine-wrap cta-shine-wrap--header">
+            <a
+              href="/contact"
+              data-spa-link
+              class="btn btn--primary btn-ripple cta-shine-button"
+              >Contact us</a
+            >
+          </div>
+          <button
+            type="button"
+            class="nav__menu-btn"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobile-drawer"
+            data-mobile-nav-open
+          >
+            <i class="ri-menu-line" aria-hidden="true"></i>
+          </button>
+        </div>
       </nav>
-      <div class="section__container header__container" id="home">
-        <div class="header__content">
-          <h1>Providing an Exceptional Patient Experience</h1>
-          <p>
-            Welcome, where exceptional patient experiences are our priority.
-            With compassionate care, state-of-the-art facilities, and a
-            patient-centered approach, we're dedicated to your well-being. Trust
-            us with your health and experience the difference.
-          </p>
-          <button class="btn">See Services</button>
-        </div>
-        <div class="header__form">
-          <form>
-            <h4>Book Now</h4>
-            <input type="text" placeholder="First Name" />
-            <input type="text" placeholder="Last Name" />
-            <input type="text" placeholder="Address" />
-            <input type="text" placeholder="Phone No." />
-            <button class="btn form__btn">Book Appointment</button>
-          </form>
-        </div>
-      </div>
     </header>
 
-    <section class="section__container service__container" id="service">
-      <div class="service__header">
-        <div class="service__header__content">
-          <h2 class="section__header">Our Special service</h2>
-          <p>
-            Beyond simply providing medical care, our commitment lies in
-            delivering unparalleled service tailored to your unique needs.
-          </p>
-        </div>
-        <button class="service__btn">Ask A Service</button>
+    <!-- Mobile drawer: toggled via appState.mobileNavOpen in sidebar.js -->
+    <div
+      class="drawer-backdrop"
+      data-mobile-backdrop
+      aria-hidden="true"
+    ></div>
+    <aside
+      id="mobile-drawer"
+      class="drawer"
+      data-mobile-drawer
+      aria-hidden="true"
+      aria-label="Mobile navigation"
+    >
+      <div class="drawer__head max-w-9xl">
+        <span class="drawer__title">Menu</span>
+        <button
+          type="button"
+          class="drawer__close"
+          aria-label="Close menu"
+          data-mobile-nav-close
+        >
+          <i class="ri-close-line" aria-hidden="true"></i>
+        </button>
       </div>
-      <div class="service__grid">
-        <div class="service__card">
-          <span><i class="ri-microscope-line"></i></span>
-          <h4>Laboratory Test</h4>
-          <p>
-            Accurate Diagnostics, Swift Results: Experience top-notch Laboratory
-            Testing at our facility.
-          </p>
-          <a href="#">Learn More</a>
-        </div>
-        <div class="service__card">
-          <span><i class="ri-mental-health-line"></i></span>
-          <h4>Health Check</h4>
-          <p>
-            Our thorough assessments and expert evaluations help you stay
-            proactive about your health.
-          </p>
-          <a href="#">Learn More</a>
-        </div>
-        <div class="service__card">
-          <span><i class="ri-hospital-line"></i></span>
-          <h4>General Dentistry</h4>
-          <p>
-            Experience comprehensive oral care with Dentistry. Trust us to keep
-            your smile healthy and bright.
-          </p>
-          <a href="#">Learn More</a>
-        </div>
-      </div>
-    </section>
-    <section class="section__container about__container" id="about">
-      <div class="about__content">
-        <h2 class="section__header">About Us</h2>
-        <p>
-          Welcome to our healthcare website, your one-stop destination for
-          reliable and comprehensive health care information. We are committed
-          to promoting wellness and providing valuable resources to empower you
-          on your health journey.
-        </p>
-        <p>
-          Explore our extensive collection of expertly written articles and
-          guides covering a wide range of health topics. From understanding
-          common medical conditions to tips for maintaining a healthy lifestyle,
-          our content is designed to educate, inspire, and support you in making
-          informed choices for your health.
-        </p>
-        <p>
-          Discover practical health tips and lifestyle advice to optimize your
-          physical and mental well-being. We believe that small changes can lead
-          to significant improvements in your quality of life, and we're here to
-          guide you on your path to a healthier and happier you.
-        </p>
-      </div>
-      <div class="about__image">
-        <img src="assets/about.jpg" alt="about" />
-      </div>
-    </section>
+      <nav class="drawer__nav max-w-9xl" aria-label="Mobile">
+        <a href="/" data-spa-link data-nav-link>Home</a>
+        <a href="/services" data-spa-link data-nav-link>Services</a>
+        <a href="/about" data-spa-link data-nav-link>About</a>
+        <a href="/doctors" data-spa-link data-nav-link>Doctors</a>
+        <a href="/why" data-spa-link data-nav-link>Why us</a>
+        <a href="/resources" data-spa-link data-nav-link>Resources</a>
+        <a href="/contact" data-spa-link data-nav-link>Contact</a>
+      </nav>
+    </aside>
 
-    <section class="section__container why__container" id="blog">
-      <div class="why__image">
-        <img src="assets/choose-us.jpg" alt="why choose us" />
-      </div>
-      <div class="why__content">
-        <h2 class="section__header">Why Choose Us</h2>
-        <p>
-          With a steadfast commitment to your well-being, our team of highly
-          trained healthcare professionals ensures that you receive nothing
-          short of exceptional patient experiences.
-        </p>
-        <div class="why__grid">
-          <span><i class="ri-hand-heart-line"></i></span>
-          <div>
-            <h4>Intensive Care</h4>
-            <p>
-              Our Intensive Care Unit is equipped with advanced technology and
-              staffed by team of professionals
+    <main id="main">
+      <!-- Hero: background image from Unsplash; parallax layer optional -->
+      <header
+        class="hero"
+        id="home"
+        style="
+          --hero-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1920&q=80');
+        "
+      >
+        <div class="hero__parallax" data-parallax-layer aria-hidden="true"></div>
+        <div class="max-w-9xl hero__inner">
+          <div class="hero__content reveal">
+            <p class="badge badge--sky hero__eyebrow">Patient-first care</p>
+            <h1>Providing an exceptional patient experience</h1>
+            <p class="hero__lead">
+              Welcome — where compassionate care, modern facilities, and clear
+              communication meet. We are dedicated to your well-being with a calm,
+              respectful visit every time.
             </p>
+            <div class="hero__cta-row">
+              <div class="cta-shine-wrap">
+                <a
+                  href="/services"
+                  data-spa-link
+                  class="btn btn--primary btn-ripple cta-shine-button"
+                  >See services</a
+                >
+              </div>
+              <a
+                href="/about"
+                data-spa-link
+                class="btn btn--ghost btn-ripple"
+                >About us</a
+              >
+            </div>
           </div>
-          <span><i class="ri-truck-line"></i></span>
-          <div>
-            <h4>Free Ambulance Car</h4>
-            <p>
-              A compassionate initiative to prioritize your health and
-              well-being without any financial burden.
-            </p>
-          </div>
-          <span><i class="ri-hospital-line"></i></span>
-          <div>
-            <h4>Medical and Surgical</h4>
-            <p>
-              Our Medical and Surgical services offer advanced healthcare
-              solutions to address medical needs.
-            </p>
+          <div class="hero__form-card reveal reveal--delay">
+            <form class="book-form" action="#" method="get">
+              <h2 class="book-form__title">Book now</h2>
+              <label class="sr-only" for="fn">First name</label>
+              <input
+                id="fn"
+                name="firstName"
+                type="text"
+                placeholder="First name"
+                autocomplete="given-name"
+              />
+              <label class="sr-only" for="ln">Last name</label>
+              <input
+                id="ln"
+                name="lastName"
+                type="text"
+                placeholder="Last name"
+                autocomplete="family-name"
+              />
+              <label class="sr-only" for="addr">Address</label>
+              <input
+                id="addr"
+                name="address"
+                type="text"
+                placeholder="Address"
+                autocomplete="street-address"
+              />
+              <label class="sr-only" for="phone">Phone</label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="Phone number"
+                autocomplete="tel"
+              />
+              <button type="submit" class="btn btn--secondary btn-ripple form__btn">
+                Book appointment
+              </button>
+            </form>
           </div>
         </div>
-      </div>
-    </section>
+      </header>
 
-    <section class="section__container doctors__container" id="pages">
-      <div class="doctors__header">
-        <div class="doctors__header__content">
-          <h2 class="section__header">Our Special Doctors</h2>
+      <!-- Quick stats: reinforces trust; numbers are illustrative for the demo -->
+      <section class="section section--stats max-w-9xl reveal" aria-label="Highlights">
+        <article class="stat-card stat-card--sky">
+          <p class="stat-card__label">Avg. wait time</p>
+          <p class="stat-card__value">12 min</p>
+          <p class="stat-card__hint">Goal: keep visits moving smoothly.</p>
+        </article>
+        <article class="stat-card stat-card--emerald">
+          <p class="stat-card__label">Patient satisfaction</p>
+          <p class="stat-card__value">4.9 / 5</p>
+          <p class="stat-card__hint">From post-visit surveys (demo data).</p>
+        </article>
+        <article class="stat-card stat-card--amber">
+          <p class="stat-card__label">Same-week visits</p>
+          <p class="stat-card__value">380+</p>
+          <p class="stat-card__hint">Illustrative weekly capacity.</p>
+        </article>
+      </section>
+
+      <section class="section max-w-9xl" id="service">
+        <div class="section__head reveal">
+          <div>
+            <h2 class="section__title">Our special services</h2>
+            <p class="section__subtitle">
+              Beyond providing medical care, we tailor services to your needs with
+              clear explanations and coordinated follow-up.
+            </p>
+          </div>
+          <button type="button" class="btn btn--outline btn-ripple service__btn">
+            Ask a service
+          </button>
+        </div>
+        <div class="service__grid">
+          <article class="service__card glass-card reveal">
+            <span class="service__icon" aria-hidden="true"
+              ><i class="ri-microscope-line"></i
+            ></span>
+            <h3>Laboratory tests</h3>
+            <p>
+              Accurate diagnostics and swift results with careful sample handling
+              and reporting you can understand.
+            </p>
+            <a href="/resources" data-spa-link class="service__link"
+              >Learn more</a
+            >
+          </article>
+          <article class="service__card glass-card reveal">
+            <span class="service__icon" aria-hidden="true"
+              ><i class="ri-mental-health-line"></i
+            ></span>
+            <h3>Health checks</h3>
+            <p>
+              Preventive assessments help you stay ahead of issues with practical
+              lifestyle guidance.
+            </p>
+            <a href="/resources" data-spa-link class="service__link"
+              >Learn more</a
+            >
+          </article>
+          <article class="service__card glass-card reveal">
+            <span class="service__icon" aria-hidden="true"
+              ><i class="ri-hospital-line"></i
+            ></span>
+            <h3>General dentistry</h3>
+            <p>
+              Comprehensive oral care to keep your smile healthy — routine cleanings
+              to restorative options.
+            </p>
+            <a href="/resources" data-spa-link class="service__link"
+              >Learn more</a
+            >
+          </article>
+        </div>
+      </section>
+
+      <!-- Tabs: tablist pattern initialized in tabs.js -->
+      <section class="section section--tabs max-w-9xl reveal" aria-labelledby="tabs-heading">
+        <h2 id="tabs-heading" class="section__title">Plans &amp; information</h2>
+        <p class="section__subtitle section__subtitle--tabs">
+          Click a tab to swap panels — <code>aria-selected</code> keeps assistive
+          tech in sync (open tabs.js to see how).
+        </p>
+        <div
+          class="tabs"
+          role="tablist"
+          aria-label="Services insurance and FAQ"
+        >
+          <button
+            type="button"
+            role="tab"
+            id="tab-svc"
+            aria-selected="true"
+            aria-controls="panel-svc"
+          >
+            Services
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="tab-ins"
+            aria-selected="false"
+            aria-controls="panel-ins"
+            tabindex="-1"
+          >
+            Insurance
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="tab-faq"
+            aria-selected="false"
+            aria-controls="panel-faq"
+            tabindex="-1"
+          >
+            FAQ
+          </button>
+        </div>
+        <div
+          id="panel-svc"
+          role="tabpanel"
+          aria-labelledby="tab-svc"
+          class="tab-panel tab-panel--active"
+        >
           <p>
-            We take pride in our exceptional team of doctors, each a specialist
-            in their respective fields.
+            Primary care, diagnostics, and specialty referrals are coordinated
+            through one chart so your story is not repeated room to room.
+          </p>
+          <ul class="tab-panel__list">
+            <li>Same-day acute visits when capacity allows</li>
+            <li>Secure messaging for non-urgent questions</li>
+            <li>After-visit summaries in plain language</li>
+          </ul>
+        </div>
+        <div
+          id="panel-ins"
+          role="tabpanel"
+          aria-labelledby="tab-ins"
+          class="tab-panel"
+          hidden
+        >
+          <p>
+            We work with major insurers; bring your card photo ID. Estimates for
+            elective procedures can be requested at the front desk.
+          </p>
+          <p class="tab-panel__note">
+            This is demo copy for the learning project — verify coverage with your
+            carrier.
           </p>
         </div>
-        <div class="doctors__nav">
-          <span><i class="ri-arrow-left-line"></i></span>
-          <span><i class="ri-arrow-right-line"></i></span>
+        <div
+          id="panel-faq"
+          role="tabpanel"
+          aria-labelledby="tab-faq"
+          class="tab-panel"
+          hidden
+        >
+          <details class="faq-item">
+            <summary>How do I reschedule?</summary>
+            <p>Call the number on your confirmation or use the patient portal link in your email.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What should I bring?</summary>
+            <p>Insurance card, photo ID, and a list of medications and allergies.</p>
+          </details>
         </div>
-      </div>
-      <div class="doctors__grid">
-        <div class="doctors__card">
-          <div class="doctors__card__image">
-            <img src="assets/doctor-1.jpg" alt="doctor" />
-            <div class="doctors__socials">
-              <span><i class="ri-instagram-line"></i></span>
-              <span><i class="ri-facebook-fill"></i></span>
-              <span><i class="ri-heart-fill"></i></span>
-              <span><i class="ri-twitter-fill"></i></span>
+      </section>
+
+      <section class="section max-w-9xl about__layout" id="about">
+        <div class="about__content reveal">
+          <h2 class="section__title">About us</h2>
+          <p>
+            Welcome to our healthcare site — a reliable place for clear health
+            information and trustworthy care. We promote wellness with resources
+            that respect your time and intelligence.
+          </p>
+          <p>
+            Explore articles and guides from prevention to recovery. Our content
+            is written to educate and support informed choices — not to replace
+            advice from your clinician.
+          </p>
+          <p>
+            Small, sustainable habits often matter most; we are here to guide you
+            toward a healthier, happier routine.
+          </p>
+          <div class="badge-row">
+            <span class="badge badge--emerald">Accredited lab</span>
+            <span class="badge badge--violet">24/7 phone triage</span>
+            <span class="badge badge--amber">Family friendly</span>
+          </div>
+        </div>
+        <div class="about__image reveal">
+          <img
+            class="safe-img rounded-img"
+            data-safe-src="https://images.unsplash.com/photo-1579684385127-1ef15d5081ad?auto=format&fit=crop&w=800&q=80"
+            src="https://images.unsplash.com/photo-1579684385127-1ef15d5081ad?auto=format&fit=crop&w=800&q=80"
+            alt="Clinician reviewing notes with a patient"
+            width="640"
+            height="480"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      <section class="section max-w-9xl why__layout" id="blog">
+        <div class="why__image reveal">
+          <img
+            class="safe-img rounded-img"
+            data-safe-src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
+            src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
+            alt="Modern hospital corridor"
+            width="640"
+            height="480"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="why__content reveal">
+          <h2 class="section__title">Why choose us</h2>
+          <p>
+            Our team of trained professionals focuses on respectful, safe care and
+            clear communication at every step.
+          </p>
+          <div class="why__grid">
+            <span class="why__icon" aria-hidden="true"
+              ><i class="ri-hand-heart-line"></i
+            ></span>
+            <div>
+              <h3>Intensive care</h3>
+              <p>
+                Advanced monitoring and a dedicated team when minutes matter most.
+              </p>
+            </div>
+            <span class="why__icon" aria-hidden="true"
+              ><i class="ri-truck-line"></i
+            ></span>
+            <div>
+              <h3>Ambulance support</h3>
+              <p>
+                Coordinated transport options where available — demo storytelling
+                for this UI lab.
+              </p>
+            </div>
+            <span class="why__icon" aria-hidden="true"
+              ><i class="ri-hospital-line"></i
+            ></span>
+            <div>
+              <h3>Medical &amp; surgical</h3>
+              <p>
+                From outpatient procedures to inpatient pathways, we emphasize
+                recovery planning.
+              </p>
             </div>
           </div>
-          <h4>Dr. Emily Smith</h4>
-          <p>Cardiologist</p>
         </div>
-        <div class="doctors__card">
-          <div class="doctors__card__image">
-            <img src="assets/doctor-2.jpg" alt="doctor" />
-            <div class="doctors__socials">
-              <span><i class="ri-instagram-line"></i></span>
-              <span><i class="ri-facebook-fill"></i></span>
-              <span><i class="ri-heart-fill"></i></span>
-              <span><i class="ri-twitter-fill"></i></span>
+      </section>
+
+      <!-- Comparison table: semantic table + scoped styles in styles.css -->
+      <section class="section max-w-9xl reveal" aria-labelledby="compare-heading">
+        <h2 id="compare-heading" class="section__title">Care tiers (demo)</h2>
+        <p class="section__subtitle">
+          Tables are great for comparing options side-by-side — resize the window
+          to see horizontal scroll on small screens.
+        </p>
+        <div class="table-wrap glass-panel">
+          <table class="compare-table">
+            <caption class="sr-only">
+              Comparison of visit types
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col">Standard</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Concierge</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Booking window</th>
+                <td>2–3 weeks</td>
+                <td>3–5 days</td>
+                <td>Same week</td>
+              </tr>
+              <tr>
+                <th scope="row">Telehealth</th>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Care navigator</th>
+                <td>—</td>
+                <td>Optional</td>
+                <td>Dedicated</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section max-w-9xl" id="pages">
+        <div class="section__head reveal">
+          <div>
+            <h2 class="section__title">Our doctors</h2>
+            <p class="section__subtitle">
+              Specialists who explain options clearly — filter by department with
+              the dropdown (updates <code>appState.department</code> in
+              dropdown.js).
+            </p>
+          </div>
+          <div class="doctors__toolbar">
+            <div class="dropdown" data-dropdown-root>
+              <button
+                type="button"
+                class="dropdown__toggle btn btn--outline btn-ripple"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                data-dropdown-toggle
+              >
+                <span data-dropdown-label>All departments</span>
+                <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
+              </button>
+              <ul
+                class="dropdown__menu glass-panel"
+                role="listbox"
+                hidden
+                data-dropdown-menu
+              >
+                <li>
+                  <button type="button" data-department-value="all">
+                    All departments
+                  </button>
+                </li>
+                <li>
+                  <button type="button" data-department-value="cardiology">
+                    Cardiology
+                  </button>
+                </li>
+                <li>
+                  <button type="button" data-department-value="neurology">
+                    Neurology
+                  </button>
+                </li>
+                <li>
+                  <button type="button" data-department-value="dermatology">
+                    Dermatology
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="doctors__nav-btns">
+              <button
+                type="button"
+                class="icon-btn btn-ripple"
+                aria-label="Scroll doctors left"
+                data-doctors-prev
+              >
+                <i class="ri-arrow-left-line" aria-hidden="true"></i>
+              </button>
+              <button
+                type="button"
+                class="icon-btn btn-ripple"
+                aria-label="Scroll doctors right"
+                data-doctors-next
+              >
+                <i class="ri-arrow-right-line" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
-          <h4>Dr. James Anderson</h4>
-          <p>Neurosurgeon</p>
         </div>
-        <div class="doctors__card">
-          <div class="doctors__card__image">
-            <img src="assets/doctor-3.jpg" alt="doctor" />
-            <div class="doctors__socials">
-              <span><i class="ri-instagram-line"></i></span>
-              <span><i class="ri-facebook-fill"></i></span>
-              <span><i class="ri-heart-fill"></i></span>
-              <span><i class="ri-twitter-fill"></i></span>
+        <div class="doctors__track" data-doctors-track>
+          <article
+            class="doctors__card glass-card"
+            data-doctor-card
+            data-department="cardiology"
+          >
+            <div class="doctors__card__image">
+              <img
+                class="safe-img"
+                data-safe-src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80"
+                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80"
+                alt="Dr. Emily Smith"
+                width="400"
+                height="480"
+                loading="lazy"
+              />
+              <div class="doctors__socials" aria-hidden="true">
+                <span><i class="ri-instagram-line"></i></span>
+                <span><i class="ri-facebook-fill"></i></span>
+                <span><i class="ri-heart-fill"></i></span>
+                <span><i class="ri-twitter-fill"></i></span>
+              </div>
             </div>
-          </div>
-          <h4>Dr. Michael Lee</h4>
-          <p>Dermatologist</p>
+            <h3>Dr. Emily Smith</h3>
+            <p>Cardiologist</p>
+            <span class="badge badge--sky doctors__badge">Heart health</span>
+          </article>
+          <article
+            class="doctors__card glass-card"
+            data-doctor-card
+            data-department="neurology"
+          >
+            <div class="doctors__card__image">
+              <img
+                class="safe-img"
+                data-safe-src="https://images.unsplash.com/photo-1612349316228-5942a9b489c2?auto=format&fit=crop&w=600&q=80"
+                src="https://images.unsplash.com/photo-1612349316228-5942a9b489c2?auto=format&fit=crop&w=600&q=80"
+                alt="Dr. James Anderson"
+                width="400"
+                height="480"
+                loading="lazy"
+              />
+              <div class="doctors__socials" aria-hidden="true">
+                <span><i class="ri-instagram-line"></i></span>
+                <span><i class="ri-facebook-fill"></i></span>
+                <span><i class="ri-heart-fill"></i></span>
+                <span><i class="ri-twitter-fill"></i></span>
+              </div>
+            </div>
+            <h3>Dr. James Anderson</h3>
+            <p>Neurosurgeon</p>
+            <span class="badge badge--violet doctors__badge">Brain &amp; spine</span>
+          </article>
+          <article
+            class="doctors__card glass-card"
+            data-doctor-card
+            data-department="dermatology"
+          >
+            <div class="doctors__card__image">
+              <img
+                class="safe-img"
+                data-safe-src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80"
+                src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80"
+                alt="Dr. Michael Lee"
+                width="400"
+                height="480"
+                loading="lazy"
+              />
+              <div class="doctors__socials" aria-hidden="true">
+                <span><i class="ri-instagram-line"></i></span>
+                <span><i class="ri-facebook-fill"></i></span>
+                <span><i class="ri-heart-fill"></i></span>
+                <span><i class="ri-twitter-fill"></i></span>
+              </div>
+            </div>
+            <h3>Dr. Michael Lee</h3>
+            <p>Dermatologist</p>
+            <span class="badge badge--emerald doctors__badge">Skin care</span>
+          </article>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="section max-w-9xl resources reveal" id="resources">
+        <div class="resources__text">
+          <h2 class="section__title">Patient resources</h2>
+          <p class="section__subtitle">
+            Downloadable forms, visit prep, and what to expect — this block is a
+            layout sample with an Unsplash accent image.
+          </p>
+          <ul class="resources__list">
+            <li><span class="badge badge--sky">PDF</span> New patient packet</li>
+            <li><span class="badge badge--amber">Tip</span> Fasting instructions</li>
+            <li><span class="badge badge--emerald">Portal</span> Lab results</li>
+          </ul>
+        </div>
+        <div class="resources__visual">
+          <img
+            class="safe-img rounded-img"
+            data-safe-src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
+            src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
+            alt="Healthcare professional with tablet"
+            width="720"
+            height="540"
+            loading="lazy"
+          />
+        </div>
+      </section>
+
+      <section class="section max-w-9xl contact-block reveal" id="contact">
+        <div class="contact-block__inner glass-panel">
+          <h2 class="section__title">Visit or reach out</h2>
+          <p>
+            123 London Bridge Street, London — support@care.com — (+012) 3456 789
+          </p>
+          <div class="cta-shine-wrap">
+            <button type="button" class="btn btn--primary btn-ripple cta-shine-button">
+              Schedule a call
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <footer class="footer">
-      <div class="section__container footer__container">
+      <div class="max-w-9xl footer__container">
         <div class="footer__col">
-          <h3>Health<span>Care</span></h3>
+          <h2 class="footer__brand">
+            Health<span class="nav__logo-accent">Care</span>
+          </h2>
           <p>
-            We are honored to be a part of your healthcare journey and committed
-            to delivering compassionate, personalized, and top-notch care every
-            step of the way.
+            We are honored to be part of your healthcare journey and committed to
+            compassionate, personalized care every step of the way.
           </p>
           <p>
-            Trust us with your health, and let us work together to achieve the
-            best possible outcomes for you and your loved ones.
+            Trust us with your health, and let us work together toward the best
+            outcomes for you and your loved ones.
           </p>
         </div>
         <div class="footer__col">
-          <h4>About Us</h4>
-          <p>Home</p>
-          <p>About Us</p>
-          <p>Work With Us</p>
-          <p>Our Blog</p>
-          <p>Terms & Conditions</p>
+          <h3 class="footer__heading">About us</h3>
+          <p><a href="/" data-spa-link>Home</a></p>
+          <p><a href="/about" data-spa-link>About us</a></p>
+          <p>Work with us</p>
+          <p>Our blog</p>
+          <p>Terms &amp; conditions</p>
         </div>
         <div class="footer__col">
-          <h4>Services</h4>
-          <p>Search Terms</p>
-          <p>Advance Search</p>
-          <p>Privacy Policy</p>
+          <h3 class="footer__heading">Services</h3>
+          <p>Search terms</p>
+          <p>Advanced search</p>
+          <p>Privacy policy</p>
           <p>Suppliers</p>
-          <p>Our Stores</p>
+          <p>Our stores</p>
         </div>
         <div class="footer__col">
-          <h4>Contact Us</h4>
+          <h3 class="footer__heading">Contact us</h3>
           <p>
-            <i class="ri-map-pin-2-fill"></i> 123, London Bridge Street, London
+            <i class="ri-map-pin-2-fill" aria-hidden="true"></i> 123, London
+            Bridge Street, London
           </p>
-          <p><i class="ri-mail-fill"></i> support@care.com</p>
-          <p><i class="ri-phone-fill"></i> (+012) 3456 789</p>
+          <p><i class="ri-mail-fill" aria-hidden="true"></i> support@care.com</p>
+          <p><i class="ri-phone-fill" aria-hidden="true"></i> (+012) 3456 789</p>
         </div>
       </div>
       <div class="footer__bar">
-        <div class="footer__bar__content">
-          <p>Copyright © 2025 Arnob Mahmud. All rights reserved.</p>
-          <div class="footer__socials">
-            <span><i class="ri-instagram-line"></i></span>
-            <span><i class="ri-facebook-fill"></i></span>
-            <span><i class="ri-heart-fill"></i></span>
-            <span><i class="ri-twitter-fill"></i></span>
+        <div class="max-w-9xl footer__bar__content">
+          <p>Copyright © 2026 Arnob Mahmud. All rights reserved.</p>
+          <div class="footer__socials" aria-label="Social">
+            <span><i class="ri-instagram-line" aria-hidden="true"></i></span>
+            <span><i class="ri-facebook-fill" aria-hidden="true"></i></span>
+            <span><i class="ri-heart-fill" aria-hidden="true"></i></span>
+            <span><i class="ri-twitter-fill" aria-hidden="true"></i></span>
           </div>
         </div>
       </div>
     </footer>
+
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>
