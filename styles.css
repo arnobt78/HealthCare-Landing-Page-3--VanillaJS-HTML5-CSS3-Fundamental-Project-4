@@ -1545,12 +1545,27 @@ button {
 }
 
 .tabs [role="tab"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.6rem 1.25rem;
   border-radius: 999px;
   border: 1px solid rgba(15, 23, 42, 0.12);
   background: rgba(255, 255, 255, 0.8);
   color: var(--text-muted);
   font-weight: 600;
+}
+
+.tabs__tab-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.tabs__tab-label i {
+  font-size: 1.12rem;
+  line-height: 1;
+  opacity: 0.92;
 }
 
 .tabs [role="tab"][aria-selected="true"] {
@@ -1568,6 +1583,44 @@ button {
   box-shadow:
     var(--glow-sky-sm),
     0 16px 40px rgba(15, 23, 42, 0.05);
+}
+
+/* Staggered reveal when a tab becomes active (see tabs.js) */
+.tab-panel [data-tab-line] {
+  opacity: 1;
+  transform: none;
+}
+
+.tabs-block--ready .tab-panel:not(.tab-panel--lines-visible) [data-tab-line] {
+  opacity: 0;
+  transform: translateY(0.85rem);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--tab-line-delay, 0ms),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--tab-line-delay, 0ms);
+}
+
+.tabs-block--ready .tab-panel--lines-visible [data-tab-line] {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--tab-line-delay, 0ms),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--tab-line-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-panel [data-tab-line] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+.tab-panel__faq-intro {
+  margin-bottom: 0.35rem;
+}
+
+.tab-panel__faq-intro + .faq-item {
+  margin-top: 0.5rem;
 }
 
 .tab-panel__list {

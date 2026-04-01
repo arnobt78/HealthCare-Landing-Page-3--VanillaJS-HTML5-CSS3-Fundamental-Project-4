@@ -402,13 +402,13 @@
         class="section section--tabs max-w-9xl"
         aria-labelledby="tabs-heading"
       >
-        <div data-reveal-stagger="75">
+        <div data-reveal-stagger="75" data-tabs-carousel>
           <h2 id="tabs-heading" class="section__title">
             Plans &amp; information
           </h2>
           <p class="section__subtitle section__subtitle--tabs">
-            Click a tab to swap panels — <code>aria-selected</code> keeps
-            assistive tech in sync (open tabs.js to see how).
+            Explore what we offer, how billing works with your plan, and answers
+            to common questions—all in one place.
           </p>
           <div
             class="tabs"
@@ -422,7 +422,10 @@
               aria-selected="true"
               aria-controls="panel-svc"
             >
-              Services
+              <span class="tabs__tab-label">
+                <i class="ri-service-line" aria-hidden="true"></i>
+                Services
+              </span>
             </button>
             <button
               type="button"
@@ -432,7 +435,10 @@
               aria-controls="panel-ins"
               tabindex="-1"
             >
-              Insurance
+              <span class="tabs__tab-label">
+                <i class="ri-shield-check-line" aria-hidden="true"></i>
+                Insurance
+              </span>
             </button>
             <button
               type="button"
@@ -442,7 +448,10 @@
               aria-controls="panel-faq"
               tabindex="-1"
             >
-              FAQ
+              <span class="tabs__tab-label">
+                <i class="ri-question-answer-line" aria-hidden="true"></i>
+                FAQ
+              </span>
             </button>
           </div>
           <div
@@ -451,14 +460,18 @@
             aria-labelledby="tab-svc"
             class="tab-panel tab-panel--active"
           >
-            <p>
+            <p data-tab-line>
               Primary care, diagnostics, and specialty referrals are coordinated
               through one chart so your story is not repeated room to room.
             </p>
+            <p data-tab-line>
+              Care teams use shared records and structured handoffs so
+              follow-up plans stay clear after every visit.
+            </p>
             <ul class="tab-panel__list">
-              <li>Same-day acute visits when capacity allows</li>
-              <li>Secure messaging for non-urgent questions</li>
-              <li>After-visit summaries in plain language</li>
+              <li data-tab-line>Same-day acute visits when capacity allows</li>
+              <li data-tab-line>Secure messaging for non-urgent questions</li>
+              <li data-tab-line>After-visit summaries in plain language</li>
             </ul>
           </div>
           <div
@@ -468,13 +481,35 @@
             class="tab-panel"
             hidden
           >
-            <p>
-              We work with major insurers; bring your card photo ID. Estimates
-              for elective procedures can be requested at the front desk.
+            <p data-tab-line>
+              We work with many major insurance plans. Please bring your member
+              ID card and a photo ID to every visit so we can verify coverage at
+              check-in.
             </p>
-            <p class="tab-panel__note">
-              This is demo copy for the learning project — verify coverage with
-              your carrier.
+            <p data-tab-line>
+              For planned or elective procedures, we can often provide a
+              good-faith estimate of expected costs—including your deductible,
+              copay, or coinsurance—before you schedule.
+            </p>
+            <p data-tab-line>
+              If your plan requires an authorization or referral from a primary
+              care physician, arrange that before specialty appointments to
+              avoid delays or unexpected charges.
+            </p>
+            <ul class="tab-panel__list tab-panel__list--ins">
+              <li data-tab-line>
+                Out-of-network benefits may still apply; ask us to review your
+                plan details with you.
+              </li>
+              <li data-tab-line>
+                Flexible payment options may be available for balances after
+                insurance processing.
+              </li>
+            </ul>
+            <p class="tab-panel__note" data-tab-line>
+              Coverage and benefits vary by plan. For the most accurate
+              information, confirm specifics with your carrier or employer
+              benefits office.
             </p>
           </div>
           <div
@@ -484,18 +519,49 @@
             class="tab-panel"
             hidden
           >
-            <details class="faq-item">
+            <p class="tab-panel__faq-intro" data-tab-line>
+              Quick answers to topics patients ask about most. For anything
+              urgent, call your care team or seek emergency care as appropriate.
+            </p>
+            <details class="faq-item" data-tab-line>
               <summary>How do I reschedule?</summary>
               <p>
-                Call the number on your confirmation or use the patient portal
-                link in your email.
+                Call the number on your appointment confirmation or use the
+                patient portal link in your email. Giving at least 24 hours’
+                notice helps us offer the time to someone else who needs care.
               </p>
             </details>
-            <details class="faq-item">
-              <summary>What should I bring?</summary>
+            <details class="faq-item" data-tab-line>
+              <summary>What should I bring to my first visit?</summary>
               <p>
-                Insurance card, photo ID, and a list of medications and
-                allergies.
+                Bring your insurance card, photo ID, a list of current
+                medications and doses, and any recent test results or records
+                from other providers you’d like us to review.
+              </p>
+            </details>
+            <details class="faq-item" data-tab-line>
+              <summary>How do refills and prescriptions work?</summary>
+              <p>
+                Refill requests are reviewed during business hours. Allow a few
+                days for processing; controlled substances may require an
+                in-person or telehealth visit per policy and law.
+              </p>
+            </details>
+            <details class="faq-item" data-tab-line>
+              <summary>How does billing work after my visit?</summary>
+              <p>
+                We submit claims to your insurer first. You may receive an
+                explanation of benefits (EOB) from them, then a statement from
+                us for any patient responsibility. Questions? Contact our
+                billing office using the number on your statement.
+              </p>
+            </details>
+            <details class="faq-item" data-tab-line>
+              <summary>Are telehealth visits available?</summary>
+              <p>
+                Many follow-ups and consults can be done by video or phone when
+                clinically appropriate. Ask when you schedule—we’ll confirm
+                whether your visit type and insurance qualify.
               </p>
             </details>
           </div>
