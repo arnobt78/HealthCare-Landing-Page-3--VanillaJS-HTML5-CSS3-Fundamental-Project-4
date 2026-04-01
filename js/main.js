@@ -30,16 +30,18 @@ function initHeroRotation() {
   const u = (id) =>
     `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1920&q=80`;
 
+  const heroLocal = (n) => `/public/hero/hero-${n}.jpg`;
+
   /**
    * Five slides; each has a primary + fallbacks. Unsplash sometimes 403s or
    * drops a file — probing onerror (false) avoids swapping to a “green” layer.
    */
   const photoCandidates = [
-    [u("1631217868264-e5b90bb7e133"), u("1538108149393-fedd4303d0e3")],
-    [u("1584515933487-779824d29309"), u("1532938911079-1b06ac7ceec7")],
-    [u("1519494026892-80bbd2d6fd0d"), u("1666214280391-8ff5bd3c0bf0")],
-    [u("1576091160399-112ba8d25d1d"), u("1516549655169-83a407c1f9b4")],
-    [u("1559839734-2b71e197d2ac"), u("1505751172876-fa1923c5c528")],
+    [heroLocal(1), u("1631217868264-e5b90bb7e133"), u("1538108149393-fedd4303d0e3")],
+    [heroLocal(2), u("1584515933487-779824d29309"), u("1532938911079-1b06ac7ceec7")],
+    [heroLocal(3), u("1519494026892-80bbd2d6fd0d"), u("1666214280391-8ff5bd3c0bf0")],
+    [heroLocal(4), u("1576091160399-112ba8d25d1d"), u("1516549655169-83a407c1f9b4")],
+    [heroLocal(5), u("1505751172876-fa1923c5c528"), u("1559839734-2b71e197d2ac")],
   ];
 
   const slideCount = photoCandidates.length;

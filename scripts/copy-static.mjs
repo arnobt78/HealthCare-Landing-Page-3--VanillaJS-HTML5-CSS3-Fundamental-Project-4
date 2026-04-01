@@ -15,7 +15,7 @@ if (fs.existsSync(dist)) {
 }
 fs.mkdirSync(dist, { recursive: true });
 
-const rootFiles = ["index.html", "styles.css"];
+const rootFiles = ["index.html", "styles.css", "fonts.css"];
 for (const f of rootFiles) {
   const src = path.join(root, f);
   if (fs.existsSync(src)) {

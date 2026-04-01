@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "DM Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/public/fonts/dm-sans-italic-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/public/fonts/dm-sans-roman.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/public/fonts/fraunces-italic-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("/public/fonts/fraunces-roman.woff2") format("woff2");
+}
