@@ -382,9 +382,14 @@ button {
 /* --- Hero --- */
 .hero {
   position: relative;
-  /* Full viewport (navbar sits over the top); 100dvh handles mobile dynamic toolbars */
-  min-height: 100vh;
-  min-height: 100dvh;
+  /*
+   * Full viewport + overlap cushion: .section--stats uses margin-top: -2rem, so the
+   * next section starts 2rem above the hero’s bottom edge. Pure 100dvh aligns the
+   * hero bottom with the viewport bottom, which exposes a strip of the stats.
+   * Extra ~0.25rem covers subpixel / scrollbar / dvh vs real pixel gaps on some screens.
+   */
+  min-height: calc(100vh + 2.25rem);
+  min-height: calc(100dvh + 2.25rem);
   display: flex;
   align-items: center;
   /* Background layers extend to viewport top under the transparent navbar */
