@@ -124,9 +124,9 @@ button {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(248, 250, 252, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(248, 250, 252, 0.68);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
   box-shadow: var(--shadow-header);
 }
@@ -160,8 +160,15 @@ button {
 }
 
 .nav__logo-icon {
+  flex-shrink: 0;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.65);
   border-radius: 10px;
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+}
+
+.nav__logo-text--no-icon {
+  margin-left: 0;
 }
 
 .nav__links {
@@ -317,22 +324,62 @@ button {
   display: flex;
   align-items: center;
   padding: 4rem 0 5rem;
-  background-image: linear-gradient(
-      120deg,
-      rgba(13, 148, 136, 0.92) 0%,
-      rgba(15, 118, 110, 0.75) 45%,
-      rgba(15, 23, 42, 0.55) 100%
-    ),
-    var(--hero-image);
-  background-size: cover;
-  background-position: center;
+  background-color: #0a2f2a;
   color: #fff;
   overflow: hidden;
+}
+
+/* Photo stack: crossfade controlled in main.js (two layers, opacity transition) */
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1.35s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.hero__bg-layer--active {
+  opacity: 1;
+}
+
+/* Brand tint over photography */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    rgba(13, 148, 136, 0.9) 0%,
+    rgba(15, 118, 110, 0.76) 45%,
+    rgba(15, 23, 42, 0.52) 100%
+  );
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at left top, rgba(6, 78, 59, 0.42) 0%, transparent 42%),
+    radial-gradient(circle at right bottom, rgba(2, 44, 34, 0.5) 0%, transparent 38%);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .hero__parallax {
   position: absolute;
   inset: -20%;
+  z-index: 3;
   background: radial-gradient(
     circle at 30% 20%,
     rgba(255, 255, 255, 0.12),
@@ -344,7 +391,7 @@ button {
 
 .hero__inner {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -380,7 +427,10 @@ button {
   font-size: 1.05rem;
 }
 
-.hero__eyebrow {
+.hero__badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
   margin-bottom: 1rem;
 }
 
@@ -417,6 +467,13 @@ button {
   font-size: 1.5rem;
   color: var(--primary-dark);
   margin-bottom: 0.25rem;
+}
+
+.book-form__subtitle {
+  margin-top: -0.2rem;
+  margin-bottom: 0.35rem;
+  color: rgba(15, 118, 110, 0.85);
+  font-size: 0.9rem;
 }
 
 .book-form input {
@@ -559,22 +616,60 @@ button {
   }
 }
 
-/* --- Scroll reveal (IntersectionObserver adds .reveal--visible) --- */
+/* --- Scroll reveal (IntersectionObserver toggles .reveal--visible in & out) --- */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
+  transform: translate3d(0, 2.15rem, 0) scale(0.985);
   transition:
-    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.33, 1, 0.68, 1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+
+@media (min-width: 768px) {
+  .reveal {
+    filter: blur(5px);
+  }
 }
 
 .reveal--visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+/* Gentle zoom on photos as their card fades in (motion-style polish) */
+.reveal .safe-img,
+.reveal img.rounded-img {
+  transform: scale(1.05);
+  transition: transform 1.05s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal--visible .safe-img,
+.reveal--visible img.rounded-img {
+  transform: scale(1);
 }
 
 .reveal--delay {
-  transition-delay: 0.15s;
+  --reveal-delay: 0.18s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero__bg-layer,
+  .reveal .safe-img,
+  .reveal img.rounded-img {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    filter: none !important;
+  }
+
+  .reveal {
+    transform: none;
+  }
 }
 
 /* --- Sections --- */
@@ -892,6 +987,15 @@ button {
 .badge--violet {
   background: rgba(139, 92, 246, 0.12);
   color: rgb(109, 40, 217);
+}
+
+.badge--hero {
+  background: rgba(6, 95, 70, 0.42);
+  color: rgba(236, 253, 245, 0.98);
+  border-color: rgba(236, 253, 245, 0.62);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.72rem;
+  box-shadow: 0 8px 25px rgba(6, 78, 59, 0.25);
 }
 
 .why__grid {

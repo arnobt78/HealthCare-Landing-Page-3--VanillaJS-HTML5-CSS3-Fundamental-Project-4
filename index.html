@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -32,19 +32,22 @@
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
-      <nav
-        class="max-w-9xl nav__bar"
-        aria-label="Primary"
-      >
+      <nav class="max-w-9xl nav__bar" aria-label="Primary">
         <a href="/" class="nav__logo" data-spa-link data-nav-link>
           <img
-            src="/favicon.ico"
+            src="/public/logo.png"
             width="36"
             height="36"
-            alt=""
+            alt="HealthCare logo"
             class="nav__logo-icon"
+            onerror="
+              this.style.display = 'none';
+              this.nextElementSibling.classList.add('nav__logo-text--no-icon');
+            "
           />
-          <span>Health<span class="nav__logo-accent">Care</span></span>
+          <span class="nav__logo-text"
+            >Health<span class="nav__logo-accent">Care</span></span
+          >
         </a>
 
         <ul class="nav__links nav__links--desktop">
@@ -95,11 +98,7 @@
     </header>
 
     <!-- Mobile drawer: toggled via appState.mobileNavOpen in sidebar.js -->
-    <div
-      class="drawer-backdrop"
-      data-mobile-backdrop
-      aria-hidden="true"
-    ></div>
+    <div class="drawer-backdrop" data-mobile-backdrop aria-hidden="true"></div>
     <aside
       id="mobile-drawer"
       class="drawer"
@@ -131,22 +130,29 @@
 
     <main id="main">
       <!-- Hero: background image from Unsplash; parallax layer optional -->
-      <header
-        class="hero"
-        id="home"
-        style="
-          --hero-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1920&q=80');
-        "
-      >
-        <div class="hero__parallax" data-parallax-layer aria-hidden="true"></div>
-        <div class="max-w-9xl hero__inner">
-          <div class="hero__content reveal">
-            <p class="badge badge--sky hero__eyebrow">Patient-first care</p>
+      <header class="hero" data-hero id="home">
+        <!-- Two layers crossfade in main.js — smoother than swapping one CSS variable -->
+        <div class="hero__media" aria-hidden="true">
+          <div class="hero__bg-layer" data-hero-bg-layer></div>
+          <div class="hero__bg-layer" data-hero-bg-layer></div>
+        </div>
+        <div
+          class="hero__parallax"
+          data-parallax-layer
+          aria-hidden="true"
+        ></div>
+        <div class="max-w-9xl hero__inner" data-reveal-stagger="100">
+          <div class="hero__content">
+            <div class="hero__badge-row">
+              <p class="badge badge--hero">Patient-first care</p>
+              <p class="badge badge--hero">24/7 support</p>
+              <p class="badge badge--hero">Trusted specialists</p>
+            </div>
             <h1>Providing an exceptional patient experience</h1>
             <p class="hero__lead">
               Welcome — where compassionate care, modern facilities, and clear
-              communication meet. We are dedicated to your well-being with a calm,
-              respectful visit every time.
+              communication meet. We are dedicated to your well-being with a
+              calm, respectful visit every time.
             </p>
             <div class="hero__cta-row">
               <div class="cta-shine-wrap">
@@ -157,17 +163,22 @@
                   >See services</a
                 >
               </div>
-              <a
-                href="/about"
-                data-spa-link
-                class="btn btn--ghost btn-ripple"
-                >About us</a
-              >
+              <div class="cta-shine-wrap">
+                <a
+                  href="/about"
+                  data-spa-link
+                  class="btn btn--ghost btn-ripple cta-shine-button"
+                  >About us</a
+                >
+              </div>
             </div>
           </div>
-          <div class="hero__form-card reveal reveal--delay">
+          <div class="hero__form-card">
             <form class="book-form" action="#" method="get">
               <h2 class="book-form__title">Book now</h2>
+              <p class="book-form__subtitle">
+                Quick scheduling in under a minute.
+              </p>
               <label class="sr-only" for="fn">First name</label>
               <input
                 id="fn"
@@ -184,13 +195,13 @@
                 placeholder="Last name"
                 autocomplete="family-name"
               />
-              <label class="sr-only" for="addr">Address</label>
+              <label class="sr-only" for="email">Email</label>
               <input
-                id="addr"
-                name="address"
-                type="text"
-                placeholder="Address"
-                autocomplete="street-address"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                autocomplete="email"
               />
               <label class="sr-only" for="phone">Phone</label>
               <input
@@ -200,16 +211,26 @@
                 placeholder="Phone number"
                 autocomplete="tel"
               />
-              <button type="submit" class="btn btn--secondary btn-ripple form__btn">
-                Book appointment
-              </button>
+              <div class="cta-shine-wrap">
+                <button
+                  type="submit"
+                  class="btn btn--secondary btn-ripple cta-shine-button form__btn"
+                >
+                  <i class="ri-calendar-check-line" aria-hidden="true"></i>
+                  Book appointment
+                </button>
+              </div>
             </form>
           </div>
         </div>
       </header>
 
       <!-- Quick stats: reinforces trust; numbers are illustrative for the demo -->
-      <section class="section section--stats max-w-9xl reveal" aria-label="Highlights">
+      <section
+        class="section section--stats max-w-9xl"
+        aria-label="Highlights"
+        data-reveal-stagger="90"
+      >
         <article class="stat-card stat-card--sky">
           <p class="stat-card__label">Avg. wait time</p>
           <p class="stat-card__value">12 min</p>
@@ -218,7 +239,7 @@
         <article class="stat-card stat-card--emerald">
           <p class="stat-card__label">Patient satisfaction</p>
           <p class="stat-card__value">4.9 / 5</p>
-          <p class="stat-card__hint">From post-visit surveys (demo data).</p>
+          <p class="stat-card__hint">From post-visit surveys.</p>
         </article>
         <article class="stat-card stat-card--amber">
           <p class="stat-card__label">Same-week visits</p>
@@ -232,49 +253,52 @@
           <div>
             <h2 class="section__title">Our special services</h2>
             <p class="section__subtitle">
-              Beyond providing medical care, we tailor services to your needs with
-              clear explanations and coordinated follow-up.
+              Beyond providing medical care, we tailor services to your needs
+              with clear explanations and coordinated follow-up.
             </p>
           </div>
-          <button type="button" class="btn btn--outline btn-ripple service__btn">
+          <button
+            type="button"
+            class="btn btn--outline btn-ripple service__btn"
+          >
             Ask a service
           </button>
         </div>
-        <div class="service__grid">
-          <article class="service__card glass-card reveal">
+        <div class="service__grid" data-reveal-stagger="95">
+          <article class="service__card glass-card">
             <span class="service__icon" aria-hidden="true"
               ><i class="ri-microscope-line"></i
             ></span>
             <h3>Laboratory tests</h3>
             <p>
-              Accurate diagnostics and swift results with careful sample handling
-              and reporting you can understand.
+              Accurate diagnostics and swift results with careful sample
+              handling and reporting you can understand.
             </p>
             <a href="/resources" data-spa-link class="service__link"
               >Learn more</a
             >
           </article>
-          <article class="service__card glass-card reveal">
+          <article class="service__card glass-card">
             <span class="service__icon" aria-hidden="true"
               ><i class="ri-mental-health-line"></i
             ></span>
             <h3>Health checks</h3>
             <p>
-              Preventive assessments help you stay ahead of issues with practical
-              lifestyle guidance.
+              Preventive assessments help you stay ahead of issues with
+              practical lifestyle guidance.
             </p>
             <a href="/resources" data-spa-link class="service__link"
               >Learn more</a
             >
           </article>
-          <article class="service__card glass-card reveal">
+          <article class="service__card glass-card">
             <span class="service__icon" aria-hidden="true"
               ><i class="ri-hospital-line"></i
             ></span>
             <h3>General dentistry</h3>
             <p>
-              Comprehensive oral care to keep your smile healthy — routine cleanings
-              to restorative options.
+              Comprehensive oral care to keep your smile healthy — routine
+              cleanings to restorative options.
             </p>
             <a href="/resources" data-spa-link class="service__link"
               >Learn more</a
@@ -284,11 +308,17 @@
       </section>
 
       <!-- Tabs: tablist pattern initialized in tabs.js -->
-      <section class="section section--tabs max-w-9xl reveal" aria-labelledby="tabs-heading">
-        <h2 id="tabs-heading" class="section__title">Plans &amp; information</h2>
+      <section
+        class="section section--tabs max-w-9xl"
+        aria-labelledby="tabs-heading"
+      >
+        <div data-reveal-stagger="75">
+        <h2 id="tabs-heading" class="section__title">
+          Plans &amp; information
+        </h2>
         <p class="section__subtitle section__subtitle--tabs">
-          Click a tab to swap panels — <code>aria-selected</code> keeps assistive
-          tech in sync (open tabs.js to see how).
+          Click a tab to swap panels — <code>aria-selected</code> keeps
+          assistive tech in sync (open tabs.js to see how).
         </p>
         <div
           class="tabs"
@@ -353,8 +383,8 @@
             elective procedures can be requested at the front desk.
           </p>
           <p class="tab-panel__note">
-            This is demo copy for the learning project — verify coverage with your
-            carrier.
+            This is demo copy for the learning project — verify coverage with
+            your carrier.
           </p>
         </div>
         <div
@@ -366,17 +396,27 @@
         >
           <details class="faq-item">
             <summary>How do I reschedule?</summary>
-            <p>Call the number on your confirmation or use the patient portal link in your email.</p>
+            <p>
+              Call the number on your confirmation or use the patient portal
+              link in your email.
+            </p>
           </details>
           <details class="faq-item">
             <summary>What should I bring?</summary>
-            <p>Insurance card, photo ID, and a list of medications and allergies.</p>
+            <p>
+              Insurance card, photo ID, and a list of medications and allergies.
+            </p>
           </details>
+        </div>
         </div>
       </section>
 
-      <section class="section max-w-9xl about__layout" id="about">
-        <div class="about__content reveal">
+      <section
+        class="section max-w-9xl about__layout"
+        id="about"
+        data-reveal-stagger="100"
+      >
+        <div class="about__content">
           <h2 class="section__title">About us</h2>
           <p>
             Welcome to our healthcare site — a reliable place for clear health
@@ -389,8 +429,8 @@
             advice from your clinician.
           </p>
           <p>
-            Small, sustainable habits often matter most; we are here to guide you
-            toward a healthier, happier routine.
+            Small, sustainable habits often matter most; we are here to guide
+            you toward a healthier, happier routine.
           </p>
           <div class="badge-row">
             <span class="badge badge--emerald">Accredited lab</span>
@@ -398,7 +438,7 @@
             <span class="badge badge--amber">Family friendly</span>
           </div>
         </div>
-        <div class="about__image reveal">
+        <div class="about__image">
           <img
             class="safe-img rounded-img"
             data-safe-src="https://images.unsplash.com/photo-1579684385127-1ef15d5081ad?auto=format&fit=crop&w=800&q=80"
@@ -412,8 +452,12 @@
         </div>
       </section>
 
-      <section class="section max-w-9xl why__layout" id="blog">
-        <div class="why__image reveal">
+      <section
+        class="section max-w-9xl why__layout"
+        id="blog"
+        data-reveal-stagger="100"
+      >
+        <div class="why__image">
           <img
             class="safe-img rounded-img"
             data-safe-src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
@@ -425,11 +469,11 @@
             decoding="async"
           />
         </div>
-        <div class="why__content reveal">
+        <div class="why__content">
           <h2 class="section__title">Why choose us</h2>
           <p>
-            Our team of trained professionals focuses on respectful, safe care and
-            clear communication at every step.
+            Our team of trained professionals focuses on respectful, safe care
+            and clear communication at every step.
           </p>
           <div class="why__grid">
             <span class="why__icon" aria-hidden="true"
@@ -438,7 +482,8 @@
             <div>
               <h3>Intensive care</h3>
               <p>
-                Advanced monitoring and a dedicated team when minutes matter most.
+                Advanced monitoring and a dedicated team when minutes matter
+                most.
               </p>
             </div>
             <span class="why__icon" aria-hidden="true"
@@ -447,8 +492,8 @@
             <div>
               <h3>Ambulance support</h3>
               <p>
-                Coordinated transport options where available — demo storytelling
-                for this UI lab.
+                Coordinated transport options where available — demo
+                storytelling for this UI lab.
               </p>
             </div>
             <span class="why__icon" aria-hidden="true"
@@ -466,11 +511,12 @@
       </section>
 
       <!-- Comparison table: semantic table + scoped styles in styles.css -->
-      <section class="section max-w-9xl reveal" aria-labelledby="compare-heading">
+      <section class="section max-w-9xl" aria-labelledby="compare-heading">
+        <div data-reveal-stagger="85">
         <h2 id="compare-heading" class="section__title">Care tiers (demo)</h2>
         <p class="section__subtitle">
-          Tables are great for comparing options side-by-side — resize the window
-          to see horizontal scroll on small screens.
+          Tables are great for comparing options side-by-side — resize the
+          window to see horizontal scroll on small screens.
         </p>
         <div class="table-wrap glass-panel">
           <table class="compare-table">
@@ -507,6 +553,7 @@
             </tbody>
           </table>
         </div>
+        </div>
       </section>
 
       <section class="section max-w-9xl" id="pages">
@@ -514,8 +561,8 @@
           <div>
             <h2 class="section__title">Our doctors</h2>
             <p class="section__subtitle">
-              Specialists who explain options clearly — filter by department with
-              the dropdown (updates <code>appState.department</code> in
+              Specialists who explain options clearly — filter by department
+              with the dropdown (updates <code>appState.department</code> in
               dropdown.js).
             </p>
           </div>
@@ -579,7 +626,11 @@
             </div>
           </div>
         </div>
-        <div class="doctors__track" data-doctors-track>
+        <div
+          class="doctors__track"
+          data-doctors-track
+          data-reveal-stagger="110"
+        >
           <article
             class="doctors__card glass-card"
             data-doctor-card
@@ -630,7 +681,9 @@
             </div>
             <h3>Dr. James Anderson</h3>
             <p>Neurosurgeon</p>
-            <span class="badge badge--violet doctors__badge">Brain &amp; spine</span>
+            <span class="badge badge--violet doctors__badge"
+              >Brain &amp; spine</span
+            >
           </article>
           <article
             class="doctors__card glass-card"
@@ -661,7 +714,8 @@
         </div>
       </section>
 
-      <section class="section max-w-9xl resources reveal" id="resources">
+      <section class="section max-w-9xl resources" id="resources">
+        <div data-reveal-stagger="90">
         <div class="resources__text">
           <h2 class="section__title">Patient resources</h2>
           <p class="section__subtitle">
@@ -669,9 +723,15 @@
             layout sample with an Unsplash accent image.
           </p>
           <ul class="resources__list">
-            <li><span class="badge badge--sky">PDF</span> New patient packet</li>
-            <li><span class="badge badge--amber">Tip</span> Fasting instructions</li>
-            <li><span class="badge badge--emerald">Portal</span> Lab results</li>
+            <li>
+              <span class="badge badge--sky">PDF</span> New patient packet
+            </li>
+            <li>
+              <span class="badge badge--amber">Tip</span> Fasting instructions
+            </li>
+            <li>
+              <span class="badge badge--emerald">Portal</span> Lab results
+            </li>
           </ul>
         </div>
         <div class="resources__visual">
@@ -685,16 +745,24 @@
             loading="lazy"
           />
         </div>
+        </div>
       </section>
 
-      <section class="section max-w-9xl contact-block reveal" id="contact">
-        <div class="contact-block__inner glass-panel">
+      <section class="section max-w-9xl contact-block" id="contact">
+        <div
+          class="contact-block__inner glass-panel"
+          data-reveal-stagger="100"
+        >
           <h2 class="section__title">Visit or reach out</h2>
           <p>
-            123 London Bridge Street, London — support@care.com — (+012) 3456 789
+            123 London Bridge Street, London — support@care.com — (+012) 3456
+            789
           </p>
           <div class="cta-shine-wrap">
-            <button type="button" class="btn btn--primary btn-ripple cta-shine-button">
+            <button
+              type="button"
+              class="btn btn--primary btn-ripple cta-shine-button"
+            >
               Schedule a call
             </button>
           </div>
@@ -703,14 +771,14 @@
     </main>
 
     <footer class="footer">
-      <div class="max-w-9xl footer__container">
+      <div class="max-w-9xl footer__container" data-reveal-stagger="70">
         <div class="footer__col">
           <h2 class="footer__brand">
             Health<span class="nav__logo-accent">Care</span>
           </h2>
           <p>
-            We are honored to be part of your healthcare journey and committed to
-            compassionate, personalized care every step of the way.
+            We are honored to be part of your healthcare journey and committed
+            to compassionate, personalized care every step of the way.
           </p>
           <p>
             Trust us with your health, and let us work together toward the best
@@ -739,17 +807,20 @@
             <i class="ri-map-pin-2-fill" aria-hidden="true"></i> 123, London
             Bridge Street, London
           </p>
-          <p><i class="ri-mail-fill" aria-hidden="true"></i> support@care.com</p>
-          <p><i class="ri-phone-fill" aria-hidden="true"></i> (+012) 3456 789</p>
+          <p>
+            <i class="ri-mail-fill" aria-hidden="true"></i> support@care.com
+          </p>
+          <p>
+            <i class="ri-phone-fill" aria-hidden="true"></i> (+012) 3456 789
+          </p>
         </div>
       </div>
       <div class="footer__bar">
         <div class="max-w-9xl footer__bar__content">
-          <p>Copyright © 2026 Arnob Mahmud. All rights reserved.</p>
+          <p>&copy; <span id="footer-year"></span>. All rights reserved.</p>
           <div class="footer__socials" aria-label="Social">
             <span><i class="ri-instagram-line" aria-hidden="true"></i></span>
             <span><i class="ri-facebook-fill" aria-hidden="true"></i></span>
-            <span><i class="ri-heart-fill" aria-hidden="true"></i></span>
             <span><i class="ri-twitter-fill" aria-hidden="true"></i></span>
           </div>
         </div>
