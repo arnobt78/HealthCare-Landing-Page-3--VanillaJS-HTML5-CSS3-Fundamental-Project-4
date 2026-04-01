@@ -48,3 +48,5 @@ export function initSafeImages(root = document) {
     bindSafeImage(img, fb);
   });
 }
+
+export { PLACEHOLDER as SAFE_IMAGE_PLACEHOLDER };

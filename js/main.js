@@ -13,6 +13,7 @@ import { initTabs } from "./tabs.js";
 import { initDepartmentDropdown } from "./dropdown.js";
 import { initMobileNav } from "./sidebar.js";
 import { initDoctorsCarousel } from "./doctorsCarousel.js";
+import { initServiceModal } from "./serviceModal.js";
 
 /**
  * Hero photos: two layers + opacity crossfade. Zoom runs one full cycle
@@ -224,6 +225,7 @@ function boot() {
   initDepartmentDropdown(document);
   initMobileNav(document.body);
   initDoctorsCarousel(document);
+  initServiceModal(document);
   initFooterYear();
   initHeaderScrollState();
 }

@@ -274,77 +274,125 @@
         data-reveal-stagger="90"
       >
         <article class="stat-card stat-card--sky">
+          <div class="stat-card__meta">
+            <span class="stat-card__state stat-card__state--sky">Low wait</span>
+            <i class="ri-timer-flash-line stat-card__icon" aria-hidden="true"></i>
+          </div>
           <p class="stat-card__label">Avg. wait time</p>
           <p class="stat-card__value">12 min</p>
           <p class="stat-card__hint">Goal: keep visits moving smoothly.</p>
         </article>
         <article class="stat-card stat-card--emerald">
+          <div class="stat-card__meta">
+            <span class="stat-card__state stat-card__state--emerald"
+              >Top rated</span
+            >
+            <i class="ri-heart-pulse-line stat-card__icon" aria-hidden="true"></i>
+          </div>
           <p class="stat-card__label">Patient satisfaction</p>
           <p class="stat-card__value">4.9 / 5</p>
           <p class="stat-card__hint">From post-visit surveys.</p>
         </article>
         <article class="stat-card stat-card--amber">
+          <div class="stat-card__meta">
+            <span class="stat-card__state stat-card__state--amber"
+              >High demand</span
+            >
+            <i class="ri-calendar-check-line stat-card__icon" aria-hidden="true"></i>
+          </div>
           <p class="stat-card__label">Same-week visits</p>
           <p class="stat-card__value">380+</p>
           <p class="stat-card__hint">Illustrative weekly capacity.</p>
         </article>
+        <article class="stat-card stat-card--violet">
+          <div class="stat-card__meta">
+            <span class="stat-card__state stat-card__state--violet">Verified</span>
+            <i class="ri-stethoscope-line stat-card__icon" aria-hidden="true"></i>
+          </div>
+          <p class="stat-card__label">Specialists on staff</p>
+          <p class="stat-card__value">50+</p>
+          <p class="stat-card__hint">Board-certified across key departments.</p>
+        </article>
       </section>
 
       <section class="section max-w-9xl" id="service">
-        <div class="section__head reveal">
-          <div>
-            <h2 class="section__title">Our special services</h2>
-            <p class="section__subtitle">
+        <div class="section__head section__head--service reveal">
+          <h2 class="section__title">Our special services</h2>
+          <div class="section__head__row">
+            <p class="section__subtitle section__subtitle--service">
               Beyond providing medical care, we tailor services to your needs
               with clear explanations and coordinated follow-up.
             </p>
+            <button
+              type="button"
+              class="btn btn--outline btn-ripple service__btn"
+              data-service-open="contact"
+            >
+              <span class="service__btn-label">
+                <i class="ri-customer-service-2-line" aria-hidden="true"></i>
+                Ask a service
+              </span>
+            </button>
           </div>
-          <button
-            type="button"
-            class="btn btn--outline btn-ripple service__btn"
-          >
-            Ask a service
-          </button>
         </div>
         <div class="service__grid" data-reveal-stagger="95">
           <article class="service__card glass-card">
             <span class="service__icon" aria-hidden="true"
               ><i class="ri-microscope-line"></i
             ></span>
+            <span class="service__badge service__badge--sky">Lab certified</span>
             <h3>Laboratory tests</h3>
             <p>
               Accurate diagnostics and swift results with careful sample
               handling and reporting you can understand.
             </p>
-            <a href="/resources" data-spa-link class="service__link"
-              >Learn more</a
+            <button
+              type="button"
+              class="service__link service__link--btn btn-ripple"
+              data-service-open="lab"
             >
+              Learn more
+            </button>
           </article>
           <article class="service__card glass-card">
             <span class="service__icon" aria-hidden="true"
               ><i class="ri-mental-health-line"></i
             ></span>
+            <span class="service__badge service__badge--emerald"
+              >Preventive care</span
+            >
             <h3>Health checks</h3>
             <p>
               Preventive assessments help you stay ahead of issues with
               practical lifestyle guidance.
             </p>
-            <a href="/resources" data-spa-link class="service__link"
-              >Learn more</a
+            <button
+              type="button"
+              class="service__link service__link--btn btn-ripple"
+              data-service-open="checks"
             >
+              Learn more
+            </button>
           </article>
           <article class="service__card glass-card">
             <span class="service__icon" aria-hidden="true"
-              ><i class="ri-hospital-line"></i
+              ><i class="ri-medicine-bottle-line"></i
             ></span>
+            <span class="service__badge service__badge--amber"
+              >Full-service oral care</span
+            >
             <h3>General dentistry</h3>
             <p>
               Comprehensive oral care to keep your smile healthy — routine
               cleanings to restorative options.
             </p>
-            <a href="/resources" data-spa-link class="service__link"
-              >Learn more</a
+            <button
+              type="button"
+              class="service__link service__link--btn btn-ripple"
+              data-service-open="dentistry"
             >
+              Learn more
+            </button>
           </article>
         </div>
       </section>
@@ -866,6 +914,50 @@
         </div>
       </div>
     </footer>
+
+    <dialog
+      class="service-modal"
+      data-service-modal
+      aria-labelledby="service-modal-title"
+    >
+      <div class="service-modal__outer">
+        <div class="service-modal__panel">
+          <button
+            type="button"
+            class="service-modal__close btn-ripple"
+            data-service-modal-close
+            aria-label="Close"
+          >
+            <i class="ri-close-line" aria-hidden="true"></i>
+          </button>
+          <div class="service-modal__grid">
+            <div class="service-modal__media">
+              <img
+                class="service-modal__img"
+                data-service-modal-img
+                alt=""
+                width="1200"
+                height="800"
+                decoding="async"
+              />
+            </div>
+            <div class="service-modal__body">
+              <div class="service-modal__meta">
+                <span
+                  class="service-modal__icon-wrap"
+                  data-service-modal-icon
+                  aria-hidden="true"
+                ></span>
+                <span class="service__badge" data-service-modal-badge></span>
+              </div>
+              <h2 id="service-modal-title" data-service-modal-title></h2>
+              <p class="service-modal__lead" data-service-modal-short></p>
+              <p class="service-modal__detail" data-service-modal-detail></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
 
     <script type="module" src="js/main.js"></script>
   </body>
