@@ -127,22 +127,13 @@ button {
 }
 
 /* --- Sticky header: frosted glass + brand-tinted layer (readable on hero & body) --- */
-@keyframes site-header-intro {
-  from {
-    opacity: 0;
-    transform: translateY(-0.85rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .site-header {
   position: sticky;
   top: 0;
   z-index: 40;
+  /* Stable layout: reserve bar height so hero never shifts under the nav on paint */
+  min-height: 4rem;
+  box-sizing: border-box;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.82) 0%,
@@ -156,12 +147,6 @@ button {
     background 0.35s ease,
     border-color 0.35s ease,
     box-shadow 0.35s ease;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .site-header {
-    animation: site-header-intro 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
 }
 
 /* Scrolled past hero: slightly more opaque bar (main.js toggles class) */
@@ -393,41 +378,83 @@ button {
   background-repeat: no-repeat;
   opacity: 0;
   transform-origin: center center;
-  transition: opacity 1.35s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: opacity 1.75s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero__bg-layer--active {
   opacity: 1;
-  animation: hero-bg-bounce 8s ease-in-out infinite;
 }
 
-/* Soft “bounce” / breathe on the visible photo layer (vanilla CSS, no library) */
-@keyframes hero-bg-bounce {
+/*
+ * One cycle per slide: symmetric zoom in / zoom out (50% = peak), same ease both
+ * halves — shorter total time than before, still synced via animationend in JS.
+ */
+@keyframes hero-bg-kenburns-cycle {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  }
+
+  50% {
+    transform: scale(1.055) translate3d(0, -0.28%, 0);
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  }
+
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__bg-layer--active {
+    animation: hero-bg-kenburns-cycle 14s forwards;
+  }
+}
+
+/* Softer, slower overlay pulse */
+@keyframes hero-overlay-breathe {
   0%,
   100% {
-    transform: scale(1) translateY(0);
+    opacity: 0.86;
   }
-  35% {
-    transform: scale(1.05) translateY(-0.9%);
-  }
-  65% {
-    transform: scale(1.025) translateY(0.35%);
+
+  50% {
+    opacity: 1;
   }
 }
 
-/* Brand tint over photography */
+/*
+ * Darker on left & right (readable text / form); lighter in the middle so the
+ * photo reads through. Teal is a thin wash, not a heavy green blanket.
+ */
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    120deg,
-    rgba(13, 148, 136, 0.9) 0%,
-    rgba(15, 118, 110, 0.76) 45%,
-    rgba(15, 23, 42, 0.52) 100%
-  );
+  background:
+    linear-gradient(
+      95deg,
+      rgba(15, 23, 42, 0.88) 0%,
+      rgba(15, 23, 42, 0.42) 22%,
+      rgba(15, 23, 42, 0.12) 48%,
+      rgba(15, 23, 42, 0.38) 76%,
+      rgba(15, 23, 42, 0.85) 100%
+    ),
+    linear-gradient(
+      125deg,
+      rgba(13, 148, 136, 0.28) 0%,
+      rgba(13, 148, 136, 0.06) 42%,
+      rgba(13, 148, 136, 0.1) 100%
+    );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero::after {
+    animation: hero-overlay-breathe 20s cubic-bezier(0.42, 0, 0.58, 1) infinite
+      alternate;
+  }
 }
 
 .hero::before {
@@ -435,10 +462,31 @@ button {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at left top, rgba(6, 78, 59, 0.42) 0%, transparent 42%),
-    radial-gradient(circle at right bottom, rgba(2, 44, 34, 0.5) 0%, transparent 38%);
+    radial-gradient(
+      ellipse 85% 70% at 18% 45%,
+      rgba(15, 23, 42, 0.45) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 80% 65% at 88% 52%,
+      rgba(15, 23, 42, 0.5) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 50% 40%,
+      transparent 0%,
+      transparent 38%,
+      rgba(6, 78, 59, 0.14) 100%
+    );
   pointer-events: none;
   z-index: 2;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero::before {
+    animation: hero-overlay-breathe 26s cubic-bezier(0.45, 0.05, 0.55, 0.95)
+      infinite alternate-reverse;
+  }
 }
 
 .hero__parallax {
@@ -734,21 +782,6 @@ button {
   filter: blur(0);
 }
 
-/* Load-time hero + booking lines: light motion, no blur/scale (not scroll IO) */
-.reveal.reveal--sequential {
-  transform: translate3d(0, 0.55rem, 0);
-  filter: none !important;
-  transition:
-    opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: 0s;
-  will-change: opacity, transform;
-}
-
-.reveal.reveal--sequential.reveal--visible {
-  transform: translate3d(0, 0, 0);
-}
-
 /* Gentle zoom on photos as their card fades in (motion-style polish) */
 .reveal .safe-img,
 .reveal img.rounded-img {
@@ -767,10 +800,6 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-header {
-    animation: none;
-  }
-
   .reveal,
   .hero__bg-layer,
   .reveal .safe-img,
@@ -786,6 +815,12 @@ button {
 
   .hero__bg-layer--active {
     animation: none !important;
+  }
+
+  .hero::after,
+  .hero::before {
+    animation: none !important;
+    opacity: 1;
   }
 }
 

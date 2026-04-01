@@ -43,17 +43,22 @@ function resolvePath(path) {
 
 /**
  * Scroll main content to a section; smooth for users, instant on first paint.
+ *
+ * Home must use window.scrollTo(0): #home sits below the sticky navbar, so
+ * scrollIntoView(block:"start") would scroll the document down by the header
+ * height and the thumb “jumps” on refresh.
  * @param {string} sectionKey — key from SECTION_BY_PATH values
  * @param {boolean} smooth
  */
 function scrollToSection(sectionKey, smooth) {
-  const id = sectionKey === "home" ? "home" : sectionKey;
-  const el = document.getElementById(id);
-  const behavior = smooth ? "smooth" : "auto";
+  const behavior = smooth ? "smooth" : "instant";
+  if (sectionKey === "home") {
+    window.scrollTo({ top: 0, left: 0, behavior });
+    return;
+  }
+  const el = document.getElementById(sectionKey);
   if (el) {
-    el.scrollIntoView({ behavior, block: "start" });
-  } else if (sectionKey === "home") {
-    window.scrollTo({ top: 0, behavior });
+    el.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
   }
 }
 
@@ -92,6 +97,10 @@ export function navigateToPath(path, push) {
  * Intercept internal links with data-spa-link so navigation stays in-page.
  */
 export function initRouter() {
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
   const initial = resolvePath(normalizePath(window.location.pathname));
   if (initial !== normalizePath(window.location.pathname)) {
     history.replaceState({ path: initial }, "", initial);
