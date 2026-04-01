@@ -47,17 +47,45 @@ function initHeroRotation() {
 
   let active = 0;
   let index = 0;
+  let cycleBusy = false;
+  let lastCycleAdvance = 0;
 
-  function goNext() {
+  /**
+   * Wait until the bitmap is ready so we never crossfade to an empty layer
+   * (reads as “no image” over the green hero fallback).
+   * @param {string} url
+   * @returns {Promise<void>}
+   */
+  function preloadHeroUrl(url) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const done = () => {
+        resolve();
+      };
+      img.onload = () => {
+        if (typeof img.decode === "function") {
+          img.decode().then(done).catch(done);
+        } else {
+          done();
+        }
+      };
+      img.onerror = done;
+      img.src = url;
+    });
+  }
+
+  /**
+   * @returns {Promise<void>}
+   */
+  async function goNext() {
     const nextIndex = (index + 1) % photos.length;
     const curLayer = active === 0 ? a : b;
     const nextLayer = active === 0 ? b : a;
     const url = photos[nextIndex];
 
-    const preload = new Image();
-    preload.src = url;
-    nextLayer.style.backgroundImage = `url("${url}")`;
+    await preloadHeroUrl(url);
 
+    nextLayer.style.backgroundImage = `url("${url}")`;
     curLayer.classList.remove("hero__bg-layer--active");
     nextLayer.classList.remove("hero__bg-layer--active");
     void nextLayer.offsetWidth;
@@ -71,9 +99,13 @@ function initHeroRotation() {
 
   if (reduce) {
     a.classList.add("hero__bg-layer--active");
-    window.setInterval(goNext, 8000);
+    window.setInterval(() => {
+      void goNext();
+    }, 8000);
     return;
   }
+
+  const CYCLE_DEBOUNCE_MS = 120;
 
   /**
    * @param {AnimationEvent} e
@@ -83,10 +115,24 @@ function initHeroRotation() {
       return;
     }
     const el = /** @type {HTMLElement} */ (e.target);
+    if (el !== e.currentTarget) {
+      return;
+    }
     if (!el.classList.contains("hero__bg-layer--active")) {
       return;
     }
-    goNext();
+    const now = performance.now();
+    if (now - lastCycleAdvance < CYCLE_DEBOUNCE_MS) {
+      return;
+    }
+    lastCycleAdvance = now;
+    if (cycleBusy) {
+      return;
+    }
+    cycleBusy = true;
+    void goNext().finally(() => {
+      cycleBusy = false;
+    });
   }
 
   a.addEventListener("animationend", onCycleEnd);
