@@ -5,8 +5,9 @@
  * Panel lines with [data-tab-line] stagger in when a tab becomes active.
  */
 
-const ROTATE_MS = 7000;
-const LINE_STAGGER_MS = 72;
+const ROTATE_MS = 5000;
+/** Delay between each line so copy reads “one cartridge at a time” */
+const LINE_STAGGER_MS = 125;
 
 /**
  * @param {HTMLElement} panel
