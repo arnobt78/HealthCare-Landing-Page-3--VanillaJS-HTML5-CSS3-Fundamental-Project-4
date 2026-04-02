@@ -2059,16 +2059,25 @@ button {
   position: relative;
   isolation: isolate;
   overflow: visible;
-  margin: 2rem 0 2.5rem;
-  padding: 2.75rem 0 3.25rem;
+  /* Keep horizontal centering: do not use margin shorthand (it would override .max-w-9xl auto margins). */
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  /* Block padding only — .max-w-9xl supplies horizontal gutter (avoid padding shorthand). */
+  padding-top: 2.75rem;
+  padding-bottom: 3.25rem;
   background: transparent;
   border-radius: 0;
+  width: 100%;
+  max-width: var(--max-9xl);
+  box-sizing: border-box;
 }
 
 .section.section--doctors::before {
   content: "";
   position: absolute;
-  inset: -10px -6px;
+  inset: -12px;
   z-index: -1;
   pointer-events: none;
   border-radius: calc(var(--radius-lg, 28px) + 12px);
@@ -2243,6 +2252,13 @@ button {
   width: max-content;
   min-height: 0;
   will-change: transform;
+}
+
+/* If .reveal ever lands on the track, strip motion so loop jumps stay instant (seamless marquee). */
+.doctors__viewport--reel .doctors__track {
+  transition: none !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 .doctors__viewport--no-reel .doctors__track,

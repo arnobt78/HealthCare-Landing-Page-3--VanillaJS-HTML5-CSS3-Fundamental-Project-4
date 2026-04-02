@@ -34,8 +34,15 @@ export function initDoctorsCarousel(root = document) {
   /** Horizontal offset for transform-based reel */
   let pos = 0;
 
+  /**
+   * One full cycle = distance from start of ribbon A to start of duplicate ribbon B
+   * (matches layout exactly; avoids subpixel drift vs offsetWidth + gap).
+   */
   function loopSpan() {
-    return ribbonA.offsetWidth + gapBetweenRibbons(track, ribbonA, ribbonB);
+    if (ribbonB.hasAttribute("hidden")) {
+      return 0;
+    }
+    return Math.round(ribbonB.offsetLeft);
   }
 
   function isFiltered() {
@@ -228,24 +235,4 @@ export function initDoctorsCarousel(root = document) {
   window.requestAnimationFrame(() => {
     syncFilterMode();
   });
-}
-
-/**
- * @param {HTMLElement} track
- * @param {HTMLElement} a
- * @param {HTMLElement} b
- */
-function gapBetweenRibbons(track, a, b) {
-  if (b.hasAttribute("hidden")) {
-    return 0;
-  }
-  const styles = window.getComputedStyle(track);
-  const gap = Number.parseFloat(styles.columnGap || styles.gap || "0");
-  if (Number.isFinite(gap) && gap > 0) {
-    return gap;
-  }
-  const ar = a.getBoundingClientRect();
-  const br = b.getBoundingClientRect();
-  const g = br.left - ar.right;
-  return g > 0 ? g : 0;
 }
