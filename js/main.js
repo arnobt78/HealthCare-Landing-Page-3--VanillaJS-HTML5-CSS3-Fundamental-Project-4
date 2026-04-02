@@ -10,6 +10,7 @@ import { initSafeImages } from "./safeImage.js";
 import { initScrollReveal, initRevealStagger } from "./scrollReveal.js";
 import { initParallax } from "./parallax.js";
 import { initTabs } from "./tabs.js";
+import { initResourcesLines } from "./resourcesLines.js";
 import { initDepartmentDropdown } from "./dropdown.js";
 import { initMobileNav } from "./sidebar.js";
 import { initDoctorsCarousel } from "./doctorsCarousel.js";
@@ -223,6 +224,7 @@ function boot() {
   initScrollReveal(document);
   initParallax(document.querySelector("[data-parallax-layer]"));
   initTabs(document);
+  initResourcesLines(document);
   initDepartmentDropdown(document);
   initMobileNav(document.body);
   initServiceModal(document);

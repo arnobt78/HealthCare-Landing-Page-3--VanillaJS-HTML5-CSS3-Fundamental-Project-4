@@ -96,7 +96,7 @@
         </ul>
 
         <div class="nav__actions">
-          <div class="cta-shine-wrap cta-shine-wrap--header">
+          <div class="cta-shine-wrap cta-shine-wrap--header cta-shine-wrap--pill">
             <a
               href="/contact"
               data-spa-link
@@ -1445,53 +1445,289 @@
       </section>
 
       <section class="section max-w-9xl resources" id="resources">
-        <div data-reveal-stagger="90">
-          <div class="resources__text">
+        <div class="resources__grid" data-reveal-stagger="85">
+          <div
+            class="resources__col resources__col--text"
+            data-resources-lines
+          >
             <h2 class="section__title">Patient resources</h2>
-            <p class="section__subtitle">
-              Downloadable forms, visit prep, and what to expect — this block is
-              a layout sample with an Unsplash accent image.
-            </p>
-            <ul class="resources__list">
-              <li>
-                <span class="badge badge--sky">PDF</span> New patient packet
-              </li>
-              <li>
-                <span class="badge badge--amber">Tip</span> Fasting instructions
-              </li>
-              <li>
-                <span class="badge badge--emerald">Portal</span> Lab results
-              </li>
-            </ul>
+            <div class="resources__anim-panel">
+              <p class="section__subtitle resources__lead" data-tab-line>
+                Everything you need before you walk in—forms, prep checklists,
+                and portal shortcuts—organized so you spend less time guessing
+                and more time on care.
+              </p>
+              <ul class="resources__item-list">
+                <li data-tab-line>
+                  <article class="resources__item">
+                    <div class="resources__item__meta">
+                      <span
+                        class="resources__item__icon"
+                        aria-hidden="true"
+                        ><i class="ri-file-pdf-line"></i
+                      ></span>
+                      <span class="service__badge service__badge--sky"
+                        ><i class="ri-download-2-line" aria-hidden="true"></i>
+                        PDF</span
+                      >
+                    </div>
+                    <div class="resources__item__body">
+                      <h3 class="resources__item__title">New patient packet</h3>
+                      <p class="resources__item__sub">
+                        Registration, medical history, and consent in one
+                        download—plus a short “what to bring” list (ID, insurance
+                        card, current meds) so check-in stays under ten minutes.
+                      </p>
+                    </div>
+                  </article>
+                </li>
+                <li data-tab-line>
+                  <article class="resources__item">
+                    <div class="resources__item__meta">
+                      <span
+                        class="resources__item__icon"
+                        aria-hidden="true"
+                        ><i class="ri-restaurant-line"></i
+                      ></span>
+                      <span class="service__badge service__badge--amber"
+                        ><i class="ri-lightbulb-line" aria-hidden="true"></i>
+                        Tip</span
+                      >
+                    </div>
+                    <div class="resources__item__body">
+                      <h3 class="resources__item__title">
+                        Fasting &amp; lab prep
+                      </h3>
+                      <p class="resources__item__sub">
+                        Clear fasting windows by test type, hydration guidance,
+                        and when to pause supplements—written in plain language
+                        so you’re not second-guessing the night before.
+                      </p>
+                    </div>
+                  </article>
+                </li>
+                <li data-tab-line>
+                  <article class="resources__item">
+                    <div class="resources__item__meta">
+                      <span
+                        class="resources__item__icon"
+                        aria-hidden="true"
+                        ><i class="ri-dashboard-3-line"></i
+                      ></span>
+                      <span class="service__badge service__badge--emerald"
+                        ><i class="ri-lock-unlock-line" aria-hidden="true"></i>
+                        Portal</span
+                      >
+                    </div>
+                    <div class="resources__item__body">
+                      <h3 class="resources__item__title">
+                        Labs &amp; visit summaries
+                      </h3>
+                      <p class="resources__item__sub">
+                        Secure portal walkthrough: how to view results, turn on
+                        notifications, share records with a specialist, and find
+                        after-visit instructions when you need them on the go.
+                      </p>
+                    </div>
+                  </article>
+                </li>
+                <li data-tab-line>
+                  <article class="resources__item">
+                    <div class="resources__item__meta">
+                      <span
+                        class="resources__item__icon"
+                        aria-hidden="true"
+                        ><i class="ri-video-chat-line"></i
+                      ></span>
+                      <span class="service__badge service__badge--teal"
+                        ><i class="ri-live-line" aria-hidden="true"></i>
+                        Video</span
+                      >
+                    </div>
+                    <div class="resources__item__body">
+                      <h3 class="resources__item__title">
+                        Telehealth visit prep
+                      </h3>
+                      <p class="resources__item__sub">
+                        Camera, lighting, and privacy tips; how to upload home
+                        readings; what to keep nearby during the call; and how
+                        we handle prescriptions or referrals after a virtual
+                        visit.
+                      </p>
+                    </div>
+                  </article>
+                </li>
+                <li data-tab-line>
+                  <article class="resources__item">
+                    <div class="resources__item__meta">
+                      <span
+                        class="resources__item__icon"
+                        aria-hidden="true"
+                        ><i class="ri-bill-line"></i
+                      ></span>
+                      <span class="service__badge service__badge--violet"
+                        ><i class="ri-wallet-3-line" aria-hidden="true"></i>
+                        Billing</span
+                      >
+                    </div>
+                    <div class="resources__item__body">
+                      <h3 class="resources__item__title">
+                        Insurance &amp; cost questions
+                      </h3>
+                      <p class="resources__item__sub">
+                        How to read your estimate, when copays are collected,
+                        out-of-network options, and how to reach our financial
+                        counselors if a bill or EOB does not match what you
+                        expected.
+                      </p>
+                    </div>
+                  </article>
+                </li>
+                <li data-tab-line>
+                  <article class="resources__item">
+                    <div class="resources__item__meta">
+                      <span
+                        class="resources__item__icon"
+                        aria-hidden="true"
+                        ><i class="ri-calendar-check-line"></i
+                      ></span>
+                      <span class="service__badge service__badge--sky"
+                        ><i class="ri-map-pin-line" aria-hidden="true"></i>
+                        Visit</span
+                      >
+                    </div>
+                    <div class="resources__item__body">
+                      <h3 class="resources__item__title">
+                        Day-of visit checklist
+                      </h3>
+                      <p class="resources__item__sub">
+                        Parking and entrance maps, arrival windows, what happens
+                        at check-in, typical visit length by appointment type,
+                        and how to request accommodations or interpreter
+                        services ahead of time.
+                      </p>
+                    </div>
+                  </article>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="resources__visual">
-            <img
-              class="safe-img rounded-img"
-              data-safe-src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
-              src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
-              alt="Healthcare professional with tablet"
-              width="720"
-              height="540"
-              loading="lazy"
-            />
+          <div class="resources__col resources__col--visual">
+            <figure class="resources__figure section-media-frame">
+              <img
+                class="safe-img resources__photo"
+                data-safe-src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
+                src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=80"
+                alt="Clinician reviewing diagnostics in a bright laboratory"
+                width="720"
+                height="540"
+                loading="lazy"
+              />
+            </figure>
+            <p class="resources__caption">
+              <span class="resources__caption__inner">
+                <i class="ri-microscope-line" aria-hidden="true"></i>
+                <span class="resources__caption__text"
+                  >Behind-the-scenes accuracy you can read about—and access—from
+                  home.</span
+                >
+              </span>
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="section max-w-9xl contact-block" id="contact">
-        <div class="contact-block__inner glass-panel" data-reveal-stagger="100">
-          <h2 class="section__title">Visit or reach out</h2>
-          <p>
-            123 London Bridge Street, London — support@care.com — (+012) 3456
-            789
-          </p>
-          <div class="cta-shine-wrap">
-            <button
-              type="button"
-              class="btn btn--primary btn-ripple cta-shine-button"
-            >
-              Schedule a call
-            </button>
+      <section
+        class="contact-hero"
+        id="contact"
+        aria-labelledby="contact-hero-title"
+      >
+        <div class="contact-hero__media">
+          <div class="contact-hero__media-bg">
+            <img
+              class="safe-img contact-hero__photo"
+              data-safe-src="/public/assets/header.jpg"
+              src="/public/assets/header.jpg"
+              alt="Welcoming clinic reception and care environment where patients are greeted for visits and follow-ups."
+              width="1920"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="contact-hero__veil" aria-hidden="true"></div>
+            <div class="contact-hero__fade" aria-hidden="true"></div>
+          </div>
+          <div class="contact-hero__frame max-w-9xl">
+            <div class="contact-hero__head">
+              <p class="contact-hero__eyebrow">
+                <i class="ri-heart-pulse-line" aria-hidden="true"></i>
+                We’re here for you
+              </p>
+              <h2 id="contact-hero-title" class="contact-hero__title">
+                Visit or reach out
+              </h2>
+              <p class="contact-hero__subtitle">
+                Your health, our ongoing commitment
+              </p>
+              <p class="contact-hero__slogan">
+                From same-day questions to follow-up after a specialist visit—we
+                answer clearly, move quickly, and keep your care plan easy to
+                follow.
+              </p>
+            </div>
+
+            <div class="contact-hero__details" data-reveal-stagger="80">
+              <div class="contact-hero__detail">
+                <span class="contact-hero__detail-icon" aria-hidden="true"
+                  ><i class="ri-map-pin-2-line"></i
+                ></span>
+                <div class="contact-hero__detail-body">
+                  <h3 class="contact-hero__detail-label">Address</h3>
+                  <p class="contact-hero__detail-text">
+                    123 London Bridge Street<br />London, UK
+                  </p>
+                </div>
+              </div>
+              <div class="contact-hero__detail">
+                <span class="contact-hero__detail-icon" aria-hidden="true"
+                  ><i class="ri-mail-line"></i
+                ></span>
+                <div class="contact-hero__detail-body">
+                  <h3 class="contact-hero__detail-label">Email</h3>
+                  <p class="contact-hero__detail-text">
+                    <a href="mailto:support@care.com">support@care.com</a>
+                  </p>
+                </div>
+              </div>
+              <div class="contact-hero__detail">
+                <span class="contact-hero__detail-icon" aria-hidden="true"
+                  ><i class="ri-phone-line"></i
+                ></span>
+                <div class="contact-hero__detail-body">
+                  <h3 class="contact-hero__detail-label">Phone</h3>
+                  <p class="contact-hero__detail-text">
+                    <a href="tel:+0123456789">(+012) 3456 789</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-hero__cta-wrap" data-reveal-stagger="100">
+              <p class="contact-hero__cta-line">
+                Prefer a conversation first? Book a short call—no pressure, just
+                answers.
+              </p>
+              <div class="contact-hero__cta-actions">
+                <div class="cta-shine-wrap cta-shine-wrap--pill">
+                  <button
+                    type="button"
+                    class="btn btn--primary btn-ripple cta-shine-button contact-hero__cta-btn"
+                  >
+                    Schedule a call
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
