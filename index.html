@@ -617,6 +617,10 @@
       >
         <div class="about__content">
           <h2 class="section__title">About us</h2>
+          <p class="section__subtitle section__subtitle--about">
+            Patient-first care, clear communication, and practical guidance for
+            healthier everyday decisions.
+          </p>
           <p>
             Welcome to our healthcare site — a reliable place for clear health
             information and trustworthy care. We promote wellness with resources
@@ -632,16 +636,22 @@
             you toward a healthier, happier routine.
           </p>
           <div class="badge-row">
-            <span class="badge badge--emerald">Accredited lab</span>
-            <span class="badge badge--violet">24/7 phone triage</span>
-            <span class="badge badge--amber">Family friendly</span>
+            <span class="service__badge service__badge--emerald"
+              >Accredited lab</span
+            >
+            <span class="service__badge service__badge--teal"
+              >24/7 phone triage</span
+            >
+            <span class="service__badge service__badge--amber"
+              >Family friendly</span
+            >
           </div>
         </div>
-        <div class="about__image">
+        <div class="about__image section-media-frame">
           <img
             class="safe-img rounded-img"
-            data-safe-src="https://images.unsplash.com/photo-1579684385127-1ef15d5081ad?auto=format&fit=crop&w=800&q=80"
-            src="https://images.unsplash.com/photo-1579684385127-1ef15d5081ad?auto=format&fit=crop&w=800&q=80"
+            data-safe-src="/public/hero/hero-3.jpg"
+            src="/public/hero/hero-3.jpg"
             alt="Clinician reviewing notes with a patient"
             width="640"
             height="480"
@@ -656,11 +666,11 @@
         id="blog"
         data-reveal-stagger="100"
       >
-        <div class="why__image">
+        <div class="why__image section-media-frame">
           <img
             class="safe-img rounded-img"
-            data-safe-src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
-            src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
+            data-safe-src="/public/hero/hero-4.jpg"
+            src="/public/hero/hero-4.jpg"
             alt="Modern hospital corridor"
             width="640"
             height="480"
@@ -670,41 +680,62 @@
         </div>
         <div class="why__content">
           <h2 class="section__title">Why choose us</h2>
+          <p class="section__subtitle section__subtitle--about">
+            Consistent quality standards, transparent updates, and coordinated
+            support from first visit to recovery.
+          </p>
           <p>
             Our team of trained professionals focuses on respectful, safe care
             and clear communication at every step.
           </p>
+          <div class="badge-row">
+            <span class="service__badge service__badge--sky"
+              >Trusted clinicians</span
+            >
+            <span class="service__badge service__badge--emerald"
+              >Care coordination</span
+            >
+            <span class="service__badge service__badge--teal"
+              >Transparent updates</span
+            >
+          </div>
           <div class="why__grid">
-            <span class="why__icon" aria-hidden="true"
-              ><i class="ri-hand-heart-line"></i
-            ></span>
-            <div>
-              <h3>Intensive care</h3>
-              <p>
-                Advanced monitoring and a dedicated team when minutes matter
-                most.
-              </p>
-            </div>
-            <span class="why__icon" aria-hidden="true"
-              ><i class="ri-truck-line"></i
-            ></span>
-            <div>
-              <h3>Ambulance support</h3>
-              <p>
-                Coordinated transport options where available — demo
-                storytelling for this UI lab.
-              </p>
-            </div>
-            <span class="why__icon" aria-hidden="true"
-              ><i class="ri-hospital-line"></i
-            ></span>
-            <div>
-              <h3>Medical &amp; surgical</h3>
-              <p>
-                From outpatient procedures to inpatient pathways, we emphasize
-                recovery planning.
-              </p>
-            </div>
+            <article class="why__item glass-panel">
+              <span class="why__icon" aria-hidden="true"
+                ><i class="ri-hand-heart-line"></i
+              ></span>
+              <div>
+                <h3>Intensive care</h3>
+                <p>
+                  Advanced monitoring and a dedicated team when minutes matter
+                  most.
+                </p>
+              </div>
+            </article>
+            <article class="why__item glass-panel">
+              <span class="why__icon" aria-hidden="true"
+                ><i class="ri-truck-line"></i
+              ></span>
+              <div>
+                <h3>Ambulance support</h3>
+                <p>
+                  Coordinated transport options where available — demo
+                  storytelling for this UI lab.
+                </p>
+              </div>
+            </article>
+            <article class="why__item glass-panel">
+              <span class="why__icon" aria-hidden="true"
+                ><i class="ri-hospital-line"></i
+              ></span>
+              <div>
+                <h3>Medical &amp; surgical</h3>
+                <p>
+                  From outpatient procedures to inpatient pathways, we emphasize
+                  recovery planning.
+                </p>
+              </div>
+            </article>
           </div>
         </div>
       </section>
@@ -713,9 +744,25 @@
       <section class="section max-w-9xl" aria-labelledby="compare-heading">
         <div data-reveal-stagger="85">
           <h2 id="compare-heading" class="section__title">Care tiers</h2>
+          <p class="compare__kicker">Compare plans at a glance</p>
+          <div class="badge-row compare__badges">
+            <span class="service__badge service__badge--sky"
+              ><i class="ri-bar-chart-box-line" aria-hidden="true"></i>
+              Side-by-side overview</span
+            >
+            <span class="service__badge service__badge--emerald"
+              ><i class="ri-shield-check-line" aria-hidden="true"></i> Coverage
+              clarity</span
+            >
+            <span class="service__badge service__badge--teal"
+              ><i class="ri-time-line" aria-hidden="true"></i> Wait-time
+              guidance</span
+            >
+          </div>
           <p class="section__subtitle">
-            Tables are great for comparing options side-by-side — resize the
-            window to see horizontal scroll on small screens.
+            Review appointment timelines, virtual-care access, and care
+            coordination support so you can choose the tier that fits your
+            medical needs, schedule, and preferred level of follow-up.
           </p>
           <div class="table-wrap glass-panel">
             <table class="compare-table">
