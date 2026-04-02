@@ -1302,6 +1302,12 @@ button {
   border: 1px solid rgba(17, 118, 110, 0.28);
 }
 
+.service__badge--violet {
+  color: rgb(91, 33, 182);
+  background: rgba(139, 92, 246, 0.16);
+  border: 1px solid rgba(139, 92, 246, 0.32);
+}
+
 .service__card h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
@@ -2049,16 +2055,33 @@ button {
 }
 
 /* --- Doctors --- */
-.section--doctors {
-  padding-top: 2.5rem;
-  padding-bottom: 3rem;
+.section.section--doctors {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  margin: 2rem 0 2.5rem;
+  padding: 2.75rem 0 3.25rem;
+  background: transparent;
+  border-radius: 0;
+}
+
+.section.section--doctors::before {
+  content: "";
+  position: absolute;
+  inset: -10px -6px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: calc(var(--radius-lg, 28px) + 12px);
   background: linear-gradient(
     180deg,
-    rgba(240, 253, 250, 0.65) 0%,
-    rgba(255, 255, 255, 0.92) 45%,
-    rgba(236, 254, 255, 0.5) 100%
+    rgba(240, 253, 250, 0.55) 0%,
+    rgba(255, 255, 255, 0.88) 42%,
+    rgba(236, 254, 255, 0.45) 100%
   );
-  border-radius: var(--radius-lg, 24px);
+  box-shadow:
+    0 0 0 1px rgba(13, 148, 136, 0.04),
+    0 0 64px 28px rgba(13, 148, 136, 0.07),
+    0 28px 72px rgba(13, 148, 136, 0.08);
 }
 
 .doctors__badges {
@@ -2170,10 +2193,8 @@ button {
 .doctors__viewport {
   position: relative;
   width: 100%;
-  overflow-x: auto;
-  overflow-y: visible;
   scroll-behavior: auto;
-  padding: 0.35rem 0 1rem;
+  padding: 0.5rem 0 1.25rem;
   margin: 0 -0.25rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -2190,8 +2211,17 @@ button {
   display: none;
 }
 
+/* Transform-based reel: hide horizontal overflow without forcing overflow-y:auto (which clipped card glows). */
 .doctors__viewport--reel {
+  overflow-x: hidden;
+  overflow-y: clip;
   cursor: grab;
+}
+
+@supports not (overflow: clip) {
+  .doctors__viewport--reel {
+    overflow-y: visible;
+  }
 }
 
 .doctors__viewport--reel:active {
@@ -2200,6 +2230,8 @@ button {
 
 .doctors__viewport--no-reel,
 .doctors__viewport--filtered {
+  overflow-x: auto;
+  overflow-y: visible;
   mask-image: none;
 }
 
@@ -2210,6 +2242,28 @@ button {
   gap: 1.5rem;
   width: max-content;
   min-height: 0;
+  will-change: transform;
+}
+
+.doctors__viewport--no-reel .doctors__track,
+.doctors__viewport--filtered .doctors__track {
+  will-change: auto;
+}
+
+/* Drop the global glass-card teal “wall” glow so a clipped overflow edge doesn’t read as a green border. */
+.section--doctors .doctors__card.glass-card {
+  padding: 0;
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 6px 28px rgba(15, 23, 42, 0.07),
+    0 0 0 1px rgba(13, 148, 136, 0.1);
+}
+
+.section--doctors .doctors__card.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 18px 44px rgba(13, 148, 136, 0.14),
+    0 0 0 1px rgba(13, 148, 136, 0.16);
 }
 
 .doctors__ribbon {
