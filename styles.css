@@ -2049,6 +2049,42 @@ button {
 }
 
 /* --- Doctors --- */
+.section--doctors {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+  background: linear-gradient(
+    180deg,
+    rgba(240, 253, 250, 0.65) 0%,
+    rgba(255, 255, 255, 0.92) 45%,
+    rgba(236, 254, 255, 0.5) 100%
+  );
+  border-radius: var(--radius-lg, 24px);
+}
+
+.doctors__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.65rem;
+  margin-top: 1rem;
+  max-width: 42rem;
+}
+
+.doctors__reel-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.doctors__reel-hint i {
+  font-size: 1.15rem;
+  color: var(--primary-dark);
+  opacity: 0.85;
+}
+
 .doctors__toolbar {
   display: flex;
   flex-direction: column;
@@ -2126,20 +2162,89 @@ button {
   color: var(--primary-dark);
 }
 
+.icon-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.doctors__viewport {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-behavior: auto;
+  padding: 0.35rem 0 1rem;
+  margin: 0 -0.25rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 2%,
+    #000 98%,
+    transparent 100%
+  );
+}
+
+.doctors__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.doctors__viewport--reel {
+  cursor: grab;
+}
+
+.doctors__viewport--reel:active {
+  cursor: grabbing;
+}
+
+.doctors__viewport--no-reel,
+.doctors__viewport--filtered {
+  mask-image: none;
+}
+
 .doctors__track {
   display: flex;
+  flex-direction: row;
+  align-items: stretch;
   gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 0.5rem;
-  scroll-behavior: smooth;
+  width: max-content;
+  min-height: 0;
+}
+
+.doctors__ribbon {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 1.5rem;
+  flex-shrink: 0;
 }
 
 .doctors__card {
-  flex: 0 0 min(100%, 300px);
-  scroll-snap-align: start;
+  flex: 0 0 clamp(260px, 72vw, 292px);
+  width: clamp(260px, 72vw, 292px);
   text-align: center;
-  overflow: hidden;
+  overflow: visible;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(13, 148, 136, 0.08);
+}
+
+.doctors__card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 16px 40px rgba(13, 148, 136, 0.12),
+    0 0 0 1px rgba(13, 148, 136, 0.15);
+}
+
+.doctors__card:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 .doctors__card.is-filtered-out {
@@ -2150,6 +2255,16 @@ button {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-md) var(--radius-md) 0 0;
+  aspect-ratio: 4 / 5;
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.doctors__card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
 .doctors__socials {
@@ -2171,6 +2286,7 @@ button {
   color: var(--text-dark);
   background: #fff;
   border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
 }
 
 .doctors__card:hover .doctors__socials {
@@ -2180,15 +2296,20 @@ button {
 .doctors__card h3 {
   margin-top: 1rem;
   font-size: 1.15rem;
+  padding: 0 0.5rem;
 }
 
 .doctors__card p {
   color: var(--text-muted);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
+  padding: 0 0.5rem;
+  font-size: 0.92rem;
 }
 
 .doctors__badge {
-  margin-bottom: 1.25rem;
+  display: inline-flex;
+  margin: 0 0.75rem 1.15rem;
+  box-shadow: 0 0 20px rgba(13, 148, 136, 0.12);
 }
 
 /* --- Resources --- */

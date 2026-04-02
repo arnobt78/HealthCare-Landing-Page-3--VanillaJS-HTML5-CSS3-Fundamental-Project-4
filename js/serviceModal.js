@@ -15,10 +15,10 @@ import { SAFE_IMAGE_PLACEHOLDER } from "./safeImage.js";
  *   image: string;
  *   imageAlt: string;
  *   images?: string[];
- * }} ServiceDetail
+ * }} ModalDetail
  */
 
-/** @type {Record<string, ServiceDetail>} */
+/** @type {Record<string, ModalDetail>} */
 const SERVICE_DETAILS = {
   lab: {
     title: "Laboratory tests",
@@ -87,6 +87,59 @@ const SERVICE_DETAILS = {
 };
 
 /**
+ * Populates the shared dialog and opens it (used by services + doctors).
+ * Call only after `initServiceModal` has run successfully.
+ *
+ * @param {ModalDetail} def
+ */
+export function openSharedModalDetail(def) {
+  if (!sharedModalRefs) {
+    return;
+  }
+
+  const { dialog, img, iconWrap, badgeEl, titleEl, shortEl, detailEl } =
+    sharedModalRefs;
+
+  const urls =
+    Array.isArray(def.images) && def.images.length > 0 ? def.images : [def.image];
+  let urlIndex = 0;
+  img.onerror = () => {
+    urlIndex += 1;
+    if (urlIndex < urls.length) {
+      img.src = urls[urlIndex];
+    } else {
+      img.onerror = null;
+      img.src = SAFE_IMAGE_PLACEHOLDER;
+    }
+  };
+
+  img.alt = def.imageAlt;
+  img.src = urls[0];
+
+  iconWrap.innerHTML = `<i class="${def.icon}" aria-hidden="true"></i>`;
+  badgeEl.textContent = def.badge;
+  badgeEl.className = `service__badge service__badge--${def.badgeMod}`;
+  titleEl.textContent = def.title;
+  shortEl.textContent = def.short;
+  detailEl.textContent = def.detail;
+
+  if (!dialog.open) {
+    dialog.showModal();
+  }
+}
+
+/** @type {null | {
+ *   dialog: HTMLDialogElement;
+ *   img: HTMLImageElement;
+ *   iconWrap: HTMLElement;
+ *   badgeEl: HTMLElement;
+ *   titleEl: HTMLElement;
+ *   shortEl: HTMLElement;
+ *   detailEl: HTMLElement;
+ * }} */
+let sharedModalRefs = null;
+
+/**
  * @param {ParentNode} [root=document]
  */
 export function initServiceModal(root = document) {
@@ -114,6 +167,16 @@ export function initServiceModal(root = document) {
     return;
   }
 
+  sharedModalRefs = {
+    dialog,
+    img,
+    iconWrap,
+    badgeEl,
+    titleEl,
+    shortEl,
+    detailEl,
+  };
+
   /**
    * @param {string} id
    */
@@ -122,35 +185,7 @@ export function initServiceModal(root = document) {
     if (!def) {
       return;
     }
-
-    const urls =
-      Array.isArray(def.images) && def.images.length > 0
-        ? def.images
-        : [def.image];
-    let urlIndex = 0;
-    img.onerror = () => {
-      urlIndex += 1;
-      if (urlIndex < urls.length) {
-        img.src = urls[urlIndex];
-      } else {
-        img.onerror = null;
-        img.src = SAFE_IMAGE_PLACEHOLDER;
-      }
-    };
-
-    img.alt = def.imageAlt;
-    img.src = urls[0];
-
-    iconWrap.innerHTML = `<i class="${def.icon}" aria-hidden="true"></i>`;
-    badgeEl.textContent = def.badge;
-    badgeEl.className = `service__badge service__badge--${def.badgeMod}`;
-    titleEl.textContent = def.title;
-    shortEl.textContent = def.short;
-    detailEl.textContent = def.detail;
-
-    if (!dialog.open) {
-      dialog.showModal();
-    }
+    openSharedModalDetail(def);
   }
 
   root.querySelectorAll("[data-service-open]").forEach((el) => {
