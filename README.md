@@ -25,7 +25,7 @@ An **educational, portfolio-ready healthcare landing page** that behaves like a 
 
 ## Table of Contents
 
-- [Project Overview](#project-overview)
+- [Project Summary](#project-summary)
 - [What This Project Is (and Is Not)](#what-this-project-is-and-is-not)
 - [Features & Functionality](#features--functionality)
 - [Technology Stack](#technology-stack)
@@ -44,7 +44,7 @@ An **educational, portfolio-ready healthcare landing page** that behaves like a 
 
 ---
 
-## Project Overview
+## Project Summary
 
 **Health Care Landing Page 3** (`healthcare-ui-3` on npm) is a **single-page healthcare marketing site** you can run entirely in the browser: one `index.html`, shared `styles.css` / `fonts.css`, and a small set of **ES module** files under `js/` that power navigation, animations, modals, tabs, a filterable doctors carousel, and optional hero imagery fallbacks.
 
