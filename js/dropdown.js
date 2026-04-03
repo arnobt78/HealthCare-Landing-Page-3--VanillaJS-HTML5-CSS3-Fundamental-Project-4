@@ -1,5 +1,8 @@
 /**
  * dropdown.js — simple disclosure menu; closes on outside click or Escape
+ *
+ * Bridges UI → appState.department. doctorsCarousel.js and filterDoctorCards()
+ * keep the visible doctor list in sync (carousel mode vs filtered scroll).
  */
 
 import { setState, getState } from "./appState.js";
@@ -30,7 +33,7 @@ export function initDepartmentDropdown(root = document) {
   const isOpen = () => btn.getAttribute("aria-expanded") === "true";
 
   btn.addEventListener("click", (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // don’t let document click handler immediately close the menu
     if (isOpen()) {
       close();
     } else {
@@ -77,11 +80,13 @@ function filterDoctorCards(value) {
   document.querySelectorAll("[data-doctor-card]").forEach((card) => {
     const dep = card.getAttribute("data-department") || "general";
     const show = value === "all" || dep === value;
+    // CSS hides .is-filtered-out; carousel JS also uses :not(.is-filtered-out) for sizing.
     card.classList.toggle("is-filtered-out", !show);
   });
 }
 
 function subscribeDepartment() {
+  // On first load: apply filter from initial state (e.g. if state were hydrated later).
   const { department } = getState();
   filterDoctorCards(department);
 }

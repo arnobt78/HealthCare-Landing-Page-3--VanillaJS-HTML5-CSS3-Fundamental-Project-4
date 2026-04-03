@@ -1,10 +1,14 @@
 /**
  * doctorModal.js — doctor profile cards open the shared [data-service-modal] dialog.
  * Requires initServiceModal() to run first (sets sharedModalRefs).
+ *
+ * Cards use data-doctor-open="emily" etc. Clicking inner <button>/<a> is ignored
+ * so nested controls don’t accidentally open the profile dialog.
  */
 
 import { openSharedModalDetail } from "./serviceModal.js";
 
+/** Same shape as service modal entries; keys match data-doctor-open on cards. */
 const DOCTOR_PROFILES = {
   emily: {
     title: "Dr. Emily Smith",
@@ -114,7 +118,7 @@ export function initDoctorModal(root = document) {
     card.addEventListener("click", (e) => {
       const t = e.target;
       if (t instanceof Element && t.closest("button, a")) {
-        return;
+        return; // don’t treat clicks on interactive children as “open profile”
       }
       const id = card.getAttribute("data-doctor-open");
       if (!id) {

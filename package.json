@@ -2,11 +2,13 @@
   "name": "healthcare-ui-3",
   "version": "1.0.0",
   "private": true,
+  "description": "Framework-free healthcare landing page — vanilla HTML, CSS, and JavaScript SPA (portfolio demo).",
+  "author": "Arnob Mahmud (https://www.arnobmahmud.com, contact@arnobmahmud.com)",
   "type": "module",
   "scripts": {
     "build": "node scripts/copy-static.mjs",
     "vercel-build": "node scripts/copy-static.mjs",
-    "lint": "eslint js/**/*.js"
+    "lint": "eslint js/**/*.js scripts/**/*.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",

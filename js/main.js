@@ -1,7 +1,12 @@
 /**
  * main.js — application entry (ES module)
  *
- * Order matters: router after DOM ready; observers after markup exists.
+ * Walkthrough: this file does not render UI itself; it imports feature modules
+ * and runs their init* functions once the DOM is ready. Think of it as the
+ * “composition root” (same idea as main.tsx in a React app, but manual).
+ *
+ * Order matters: e.g. hero imagery before scroll observers, router after
+ * elements exist, doctor modal after service modal (shared dialog refs).
  */
 
 import { initRouter } from "./router.js";
@@ -55,6 +60,7 @@ function initHeroRotation() {
   const a = /** @type {HTMLElement} */ (layers[0]);
   const b = /** @type {HTMLElement} */ (layers[1]);
 
+  // Warm the browser cache for hero URLs so crossfades are less likely to flash empty.
   photoCandidates.flat().forEach((url) => {
     const img = new Image();
     img.src = url;
@@ -63,10 +69,10 @@ function initHeroRotation() {
   a.style.backgroundImage = `url("${photoCandidates[0][0]}")`;
   b.style.backgroundImage = `url("${photoCandidates[1 % slideCount][0]}")`;
 
-  let active = 0;
-  let index = 0;
-  let cycleBusy = false;
-  let lastCycleAdvance = 0;
+  let active = 0; // which layer (0=a, 1=b) is visually on top for CSS animation
+  let index = 0; // logical slide index 0..slideCount-1
+  let cycleBusy = false; // guard: don’t start goNext while previous transition still running
+  let lastCycleAdvance = 0; // for debouncing duplicate animationend (both layers can fire)
 
   /**
    * @param {string} url
@@ -126,6 +132,7 @@ function initHeroRotation() {
     nextLayer.style.backgroundImage = `url("${url}")`;
     curLayer.classList.remove("hero__bg-layer--active");
     nextLayer.classList.remove("hero__bg-layer--active");
+    // Force reflow so the browser restarts CSS animation on next class add (retrigger keyframes).
     void nextLayer.offsetWidth;
     nextLayer.classList.add("hero__bg-layer--active");
 
@@ -135,6 +142,7 @@ function initHeroRotation() {
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Reduced motion: no Ken Burns; simple timed slide change instead.
   if (reduce) {
     a.classList.add("hero__bg-layer--active");
     window.setInterval(() => {
@@ -143,7 +151,7 @@ function initHeroRotation() {
     return;
   }
 
-  const CYCLE_DEBOUNCE_MS = 120;
+  const CYCLE_DEBOUNCE_MS = 120; // ignore spurious double animationend around the same time
 
   /**
    * @param {AnimationEvent} e
@@ -208,6 +216,7 @@ function initHeaderScrollState() {
 }
 
 function boot() {
+  // Demo only: no backend POST — prevent full page reload on submit.
   const bookForm = document.querySelector(".book-form");
   if (bookForm) {
     bookForm.addEventListener("submit", (e) => {
@@ -217,23 +226,30 @@ function boot() {
 
   /* Paint hero photos before other observers so the block does not flash empty */
   initHeroRotation();
+  // History API + in-page scroll; see router.js SECTION_BY_PATH for “fake pages”.
   initRouter();
   initRipple(".btn-ripple");
   initSafeImages(document);
+  // Scroll-driven: stagger delays on parents, then IntersectionObserver toggles .reveal--visible.
   initRevealStagger(document);
   initScrollReveal(document);
   initParallax(document.querySelector("[data-parallax-layer]"));
+  // ARIA tablist + optional auto-rotate under [data-tabs-carousel]; min-height sync in tabs.js.
   initTabs(document);
   initResourcesLines(document);
+  // Updates appState.department → doctors carousel + card filter react via subscribe().
   initDepartmentDropdown(document);
   initMobileNav(document.body);
+  // Must run before doctor modal: both use the same <dialog> and sharedModalRefs.
   initServiceModal(document);
   initDoctorModal(document);
   initDoctorsCarousel(document);
   initFooterYear();
+  // Sticky header swaps to a light theme after scrolling past the hero.
   initHeaderScrollState();
 }
 
+// Support both deferred script (DOMContentLoaded) and async late injection.
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", boot);
 } else {

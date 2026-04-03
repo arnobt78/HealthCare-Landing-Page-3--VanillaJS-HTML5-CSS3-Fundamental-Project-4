@@ -2,6 +2,12 @@
  * doctorsCarousel.js — infinite horizontal “reel” via translate3d (works when
  * scrollWidth snapping would fail); pauses on hover; respects reduced motion
  * and department filter; ResizeObserver restarts after layout/images.
+ *
+ * Concept: two identical “ribbons” of cards sit side by side. We translate the
+ * track left; when we’ve moved exactly one ribbon width, we subtract that
+ * distance from pos (modulo) so the motion is seamless — classic marquee trick.
+ *
+ * No fetch(): all doctor data lives in static HTML; this file only moves pixels.
  */
 
 import { subscribe, getState } from "./appState.js";
@@ -82,7 +88,7 @@ export function initDoctorsCarousel(root = document) {
     }
     pos += speed;
     if (pos >= span) {
-      pos -= span;
+      pos -= span; // wrap without visual jump: ribbon B looks like continuation of A
     }
     applyTrackTransform();
     rafId = window.requestAnimationFrame(tick);
@@ -122,6 +128,7 @@ export function initDoctorsCarousel(root = document) {
 
     viewport.classList.toggle("doctors__viewport--filtered", isFiltered());
     viewport.classList.toggle("doctors__viewport--no-reel", noReel);
+    // Hiding ribbon B removes duplicate cards from layout — user scrolls a single row instead.
     ribbonB.toggleAttribute("hidden", noReel);
     viewport.classList.toggle("doctors__viewport--reel", !noReel);
 
@@ -143,6 +150,7 @@ export function initDoctorsCarousel(root = document) {
     syncFilterMode();
   });
 
+  // Images loading or font resize changes card widths → recompute loop span and pos.
   const ro = new ResizeObserver(() => {
     normalizePos();
     if (!reelPaused()) {
@@ -188,6 +196,7 @@ export function initDoctorsCarousel(root = document) {
       } else {
         const span = loopSpan();
         if (span > 0) {
+          // + span*1000 keeps modulo positive while stepping backward on the reel.
           pos = (pos - st + span * 1000) % span;
         } else {
           pos = 0;

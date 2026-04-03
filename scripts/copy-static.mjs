@@ -1,11 +1,16 @@
 /**
  * Copies static assets into dist/ for Vercel (see docs/VERCEL-PLAIN-JS-DEPLOY.md).
  * Run: npm run build
+ *
+ * Walkthrough: this is not webpack — no bundling or tree-shaking. The site is
+ * served as literal files. Vercel’s outputDirectory points at dist/; rewrites
+ * in vercel.json send unknown paths to index.html for the SPA router.
  */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
+// ESM has no __dirname; derive it from import.meta.url (Node 18+).
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const dist = path.join(root, "dist");
@@ -15,6 +20,7 @@ if (fs.existsSync(dist)) {
 }
 fs.mkdirSync(dist, { recursive: true });
 
+// Top-level entry files live next to package.json (not inside public/).
 const rootFiles = ["index.html", "styles.css", "fonts.css"];
 for (const f of rootFiles) {
   const src = path.join(root, f);
@@ -23,6 +29,7 @@ for (const f of rootFiles) {
   }
 }
 
+/** Recursive copy: preserves folder tree under js/ and public/. */
 function copyDir(src, dest) {
   if (!fs.existsSync(src)) {
     return;
@@ -42,6 +49,7 @@ function copyDir(src, dest) {
 copyDir(path.join(root, "js"), path.join(dist, "js"));
 copyDir(path.join(root, "public"), path.join(dist, "public"));
 
+// Optional: promote favicon + robots to dist root for conventional URLs (/favicon.ico).
 const faviconSrc = path.join(root, "public", "favicon.ico");
 if (fs.existsSync(faviconSrc)) {
   fs.copyFileSync(faviconSrc, path.join(dist, "favicon.ico"));

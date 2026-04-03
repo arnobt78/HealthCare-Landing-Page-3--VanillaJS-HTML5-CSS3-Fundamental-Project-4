@@ -2,6 +2,8 @@
  * parallax.js — subtle translateY on scroll, throttled with requestAnimationFrame
  *
  * Keeps motion light so we avoid jank; only runs while hero is in view.
+ *
+ * rAF throttle pattern: many scroll events coalesce into one transform per frame.
  */
 
 let ticking = false;

@@ -275,6 +275,11 @@ button {
   gap: 0.75rem;
 }
 
+/* Phone: save space — Contact us stays in drawer + Contact nav link */
+.nav__actions .cta-shine-wrap--header {
+  display: none;
+}
+
 .nav__menu-btn {
   display: inline-flex;
   align-items: center;
@@ -300,6 +305,10 @@ button {
 
   .nav__menu-btn {
     display: none;
+  }
+
+  .nav__actions .cta-shine-wrap--header {
+    display: inline-block;
   }
 }
 
@@ -1584,10 +1593,14 @@ button {
   border-color: transparent;
 }
 
-/* Stable height while tabs auto-rotate (min-height set in tabs.js from tallest panel) */
+/*
+ * Stable height: tabs.js sets inline min-height to the tallest panel (FAQ measured
+ * with all <details> open). Fallback min-height limits layout shift before JS runs.
+ */
 .tab-panels {
   position: relative;
   width: 100%;
+  min-height: clamp(20rem, 48vh, 36rem);
 }
 
 .tab-panel {
@@ -2079,7 +2092,14 @@ button {
 
 /* Tighter gap under title / badges / toolbar row (default .section__head is 2.5rem ≈ 40px). */
 .section.section--doctors .section__head {
+  position: relative;
+  z-index: 20;
   margin-bottom: 1rem;
+}
+
+/* Carousel uses transform (.reveal + track) — keep it under the head so the department dropdown isn’t covered */
+.section.section--doctors .doctors__viewport {
+  z-index: 0;
 }
 
 .doctors__badges {

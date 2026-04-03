@@ -51,6 +51,7 @@ export function initScrollReveal(root = document) {
     return;
   }
 
+  // Toggle class on enter/leave viewport → CSS transitions handle fade/slide (see styles.css .reveal).
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       entry.target.classList.toggle("reveal--visible", entry.isIntersecting);

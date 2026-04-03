@@ -3,6 +3,9 @@
  *
  * Unsplash URLs need no API key. If a URL fails (network, block), we swap to
  * a neutral placeholder so the layout never breaks.
+ *
+ * Flow: initSafeImages sets img.src from data-safe-src, then bindSafeImage
+ * listens for error and swaps src to inline SVG or data-fallback-src.
  */
 
 /** @type {string} */

@@ -1,5 +1,9 @@
 /**
  * serviceModal.js — reusable <dialog> for “Our special services” detail views.
+ *
+ * Native <dialog> gives focus management and ::backdrop for free in modern browsers.
+ * doctorModal.js reuses the same DOM nodes via openSharedModalDetail() — keep
+ * initServiceModal before initDoctorModal in main.js.
  */
 
 import { SAFE_IMAGE_PLACEHOLDER } from "./safeImage.js";
@@ -18,7 +22,10 @@ import { SAFE_IMAGE_PLACEHOLDER } from "./safeImage.js";
  * }} ModalDetail
  */
 
-/** @type {Record<string, ModalDetail>} */
+/**
+ * Content map: keys match data-service-open on service cards in index.html.
+ * @type {Record<string, ModalDetail>}
+ */
 const SERVICE_DETAILS = {
   lab: {
     title: "Laboratory tests",
@@ -103,6 +110,7 @@ export function openSharedModalDetail(def) {
   const urls =
     Array.isArray(def.images) && def.images.length > 0 ? def.images : [def.image];
   let urlIndex = 0;
+  // Chain fallbacks on error (e.g. first Unsplash URL blocked) before final placeholder.
   img.onerror = () => {
     urlIndex += 1;
     if (urlIndex < urls.length) {
@@ -128,7 +136,9 @@ export function openSharedModalDetail(def) {
   }
 }
 
-/** @type {null | {
+/**
+ * Set once initServiceModal succeeds — openSharedModalDetail reads this closure.
+ * @type {null | {
  *   dialog: HTMLDialogElement;
  *   img: HTMLImageElement;
  *   iconWrap: HTMLElement;
@@ -136,7 +146,8 @@ export function openSharedModalDetail(def) {
  *   titleEl: HTMLElement;
  *   shortEl: HTMLElement;
  *   detailEl: HTMLElement;
- * }} */
+ * }}
+ */
 let sharedModalRefs = null;
 
 /**
@@ -207,6 +218,7 @@ export function initServiceModal(root = document) {
     }
   });
 
+  // Capture phase: close modal before router handles the same click (SPA nav).
   document.addEventListener(
     "click",
     (e) => {

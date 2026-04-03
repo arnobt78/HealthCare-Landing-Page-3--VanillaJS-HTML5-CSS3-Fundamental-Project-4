@@ -2,6 +2,9 @@
  * ripple.js — material-style ripple on click (see docs/RIPPLE_BUTTON_EFFECT.md)
  *
  * Ripple is visual only: pointer-events:none, removed after animation.
+ *
+ * Teaching: the span is positioned from clientX/clientY vs getBoundingClientRect()
+ * so the ripple originates under the user’s click, not the element center.
  */
 
 /**
@@ -30,6 +33,7 @@ function addRipple(event, button) {
 export function initRipple(selector = ".btn-ripple") {
   document.querySelectorAll(selector).forEach((btn) => {
     const el = /** @type {HTMLElement} */ (btn);
+    // Idempotent: initRipple may run once globally; skip duplicate listeners.
     if (el.dataset.rippleInit === "1") {
       return;
     }

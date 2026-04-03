@@ -1,5 +1,8 @@
 /**
  * sidebar.js — mobile navigation drawer (simplified: overlay + focus return)
+ *
+ * Ties UI to appState.mobileNavOpen. subscribe() reapplies classes/ARIA whenever
+ * state changes (same pattern as doctorsCarousel listening to department).
  */
 
 import { getState, setState, subscribe } from "./appState.js";
@@ -29,6 +32,7 @@ export function initMobileNav(root = document.body) {
     backdropEl.classList.toggle("drawer-backdrop--visible", open);
     drawerEl.setAttribute("aria-hidden", open ? "false" : "true");
     openB.setAttribute("aria-expanded", open ? "true" : "false");
+    // body.scroll lock class is defined in CSS (overflow: hidden) while menu open.
     document.body.classList.toggle("drawer-lock", open);
   };
 

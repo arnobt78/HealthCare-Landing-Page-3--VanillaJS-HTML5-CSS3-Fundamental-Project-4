@@ -1,6 +1,9 @@
 /**
  * router.js — client-side routes with the History API
  *
+ * Educational “SPA without a framework”: the document is always index.html;
+ * we only change the URL and scroll position. There is no fetch() per route.
+ *
  * Vercel serves index.html for unknown paths (see vercel.json rewrites), so
  * refreshing /services does not 404: the server returns index.html, then this
  * file reads location.pathname and scrolls to the right section.
@@ -8,7 +11,7 @@
 
 import { setState } from "./appState.js";
 
-/** Map URL path → element id (must match id="" in index.html) */
+/** Map URL path → section element id in index.html (single-page sections as “pages”). */
 const SECTION_BY_PATH = {
   "/": "home",
   "/services": "service",
@@ -38,6 +41,7 @@ export function normalizePath(path) {
  */
 function resolvePath(path) {
   const n = normalizePath(path);
+  // Unknown paths fall back to home so we never scroll to a missing id.
   return SECTION_BY_PATH[n] ? n : "/";
 }
 
@@ -88,7 +92,9 @@ export function navigateToPath(path, push) {
   if (push) {
     history.pushState({ path: resolved }, "", resolved);
   }
+  // Subscribers (e.g. carousel) can read route from getState() if needed.
   setState({ route: resolved });
+  // push===true → user click: smooth scroll; initial/popstate → instant to avoid jank.
   scrollToSection(section, push);
   syncNavActive(resolved);
 }
@@ -97,11 +103,13 @@ export function navigateToPath(path, push) {
  * Intercept internal links with data-spa-link so navigation stays in-page.
  */
 export function initRouter() {
+  // We control scroll ourselves after route changes; disable browser auto-restore.
   if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
   }
 
   const initial = resolvePath(normalizePath(window.location.pathname));
+  // If user landed on /unknown, replace URL bar with / without extra navigation.
   if (initial !== normalizePath(window.location.pathname)) {
     history.replaceState({ path: initial }, "", initial);
   }
@@ -116,6 +124,7 @@ export function initRouter() {
     syncNavActive(path);
   });
 
+  // Event delegation: any internal nav link with data-spa-link stays in-page.
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a[data-spa-link]");
     if (!a) {

@@ -1,6 +1,9 @@
 /**
  * resourcesLines.js — staggered [data-tab-line] reveal for Patient resources
  * (same timing as tabs.js Plans & information panels).
+ *
+ * Unlike tabs, animation starts once when the block scrolls into view
+ * (IntersectionObserver), then disconnects — “play once per page load” effect.
  */
 
 const LINE_STAGGER_MS = 280;
@@ -60,7 +63,7 @@ export function initResourcesLines(root = document) {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             start();
-            obs.disconnect();
+            obs.disconnect(); // run the line animation only the first time user scrolls here
           }
         }
       },

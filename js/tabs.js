@@ -3,6 +3,9 @@
  *
  * Optional: [data-tabs-carousel] on an ancestor auto-rotates tabs; pauses on hover.
  * Panel lines with [data-tab-line] stagger in when a tab becomes active.
+ *
+ * Spec reference: WAI-ARIA Authoring Practices — Tabs pattern (keyboard + roles).
+ * No API calls: pure DOM visibility via hidden + aria-selected.
  */
 
 const ROTATE_MS = 5000;
@@ -31,6 +34,7 @@ function runPanelLineAnimation(panel, reducedMotion, instant) {
     el.style.setProperty("--tab-line-delay", `${i * LINE_STAGGER_MS}ms`);
   });
 
+  // Double rAF: wait until after style flush so CSS transitions see a real “from” state.
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       panel.classList.add("tab-panel--lines-visible");
@@ -53,6 +57,7 @@ function activateTab(tabs, active, reducedMotion, instantReveal) {
   /** @type {HTMLElement | null} */
   let activePanel = null;
 
+  // Pass 1: tab roles — exactly one tab in tab order (tabIndex 0).
   tabs.forEach((tab) => {
     const btn = /** @type {HTMLButtonElement} */ (tab);
     const selected = btn === active;
@@ -60,6 +65,7 @@ function activateTab(tabs, active, reducedMotion, instantReveal) {
     btn.tabIndex = selected ? 0 : -1;
   });
 
+  // Pass 2: panels — hidden attribute removes inactive panels from accessibility tree.
   tabs.forEach((tab) => {
     const btn = /** @type {HTMLButtonElement} */ (tab);
     const pid = btn.getAttribute("aria-controls");
@@ -108,16 +114,31 @@ function syncTabPanelsMinHeight(wrap, tabs, reducedMotion) {
       return;
     }
     const wasHidden = panel.hasAttribute("hidden");
+    // FAQ tab: measure as if every <details> were open so min-height fits expanded accordions.
+    const faqDetails = panel.querySelectorAll("details.faq-item");
+    const faqOpenState = Array.from(faqDetails).map((d) => d.open);
+    faqDetails.forEach((d) => {
+      d.open = true;
+    });
+
     panel.removeAttribute("hidden");
     panel.classList.add("tab-panel--measuring", "tab-panel--lines-visible");
     maxH = Math.max(maxH, panel.offsetHeight);
     panel.classList.remove("tab-panel--measuring", "tab-panel--lines-visible");
+    faqDetails.forEach((d, i) => {
+      d.open = faqOpenState[i] ?? false;
+    });
     if (wasHidden) {
       panel.setAttribute("hidden", "");
     }
   });
 
-  wrap.style.minHeight = `${Math.ceil(maxH)}px`;
+  // Respect CSS min-height (e.g. clamp in styles.css) as a floor; inline wins in cascade.
+  const prevInline = wrap.style.minHeight;
+  wrap.style.minHeight = "";
+  const floorPx = Number.parseFloat(getComputedStyle(wrap).minHeight) || 0;
+  wrap.style.minHeight = prevInline;
+  wrap.style.minHeight = `${Math.ceil(Math.max(maxH, floorPx))}px`;
 
   if (activeBtn instanceof HTMLButtonElement) {
     activateTab(tabs, activeBtn, reducedMotion, true);
